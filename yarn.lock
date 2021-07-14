@@ -635,8 +635,8 @@ hexo-renderer-pug@^2.0.0:
 
 hexo-renderer-stylus@^2.0.1:
   version "2.0.1"
-  resolved "http://47.96.89.84:8181/repository/npm-group/hexo-renderer-stylus/-/hexo-renderer-stylus-2.0.1.tgz#c65566e97e9058a52e46c82b0c45cf561f4b94cb"
-  integrity sha1-xlVm6X6QWKUuRsgrDEXPVh9LlMs=
+  resolved "https://registry.yarnpkg.com/hexo-renderer-stylus/-/hexo-renderer-stylus-2.0.1.tgz#c65566e97e9058a52e46c82b0c45cf561f4b94cb"
+  integrity sha512-1S4AG8RtzWqVrqKIYv2AJ4UYms5SHDjkdYS7IiGwgUejL24agbTktpAbnH2cG1JWZ15SRqYN0UGB9aAoSAgvEA==
   dependencies:
     nib "^1.1.2"
     stylus "^0.54.8"
