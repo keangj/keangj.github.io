@@ -2,7 +2,7 @@
 title: webpack
 date: 2018-03-31 13:46:52
 tags: webpack
-cover: https://raw.githubusercontent.com/webpack/media/master/logo/logo-on-white-bg.png
+cover: https://pic2.zhimg.com/v2-a30354356c88fd82b42cbf231af0449d_180x120.jpg
 ---
 
 ``` js
