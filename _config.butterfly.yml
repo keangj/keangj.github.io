@@ -372,9 +372,9 @@ facebook_comments:
   lang: en_US # Language en_US/zh_CN/zh_TW and so on
 
 # Twikoo
-# https://github.com/imaegoo/twikoo
+# https://github.com/imaegoo/twikoo //https://twikoo-keangj.vercel.app/ https://twikoo-xi.vercel.app/
 twikoo:
-  envId: https://twikoo-6617e03p9-keangj.vercel.app/
+  envId: https://twikoo-xi.vercel.app/
   region: ap-hangzhou
   visitor: true
   option:
