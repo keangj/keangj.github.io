@@ -2,6 +2,7 @@
 title: HTTP
 date: 2018-03-02 19:04:48
 tags: HTTP
+cover: http://lofrev.net/wp-content/photos/2017/04/http_logo_dpwnload.png
 ---
 # HTTP
 

@@ -2,6 +2,7 @@
 title: Promise、async
 date: 2021-07-15 19:04:48
 tags: JavaScript
+cover: https://library.kissclipart.com/20181128/tsw/kissclipart-orange-clipart-ecmascript-javascript-ecma-internat-3885764678295034.png
 ---
 
 ## Promise
