@@ -400,7 +400,7 @@ chatra:
 # https://www.tidio.com/
 tidio:
   enable: false
-  public_key:
+  public_key: vlhiaapdq8mt8wjmocimfbf3pcjy7awl
 
 # daovoice
 # http://daovoice.io/
@@ -781,6 +781,21 @@ note:
   # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).
   # Offset also applied to label tag variables. This option can work with disabled note tag.
   light_bg_offset: 0
+
+# electric_clock
+# see https://akilar.top/posts/4e39cf4a/
+electric_clock:
+  enable: true # 开关
+  priority: 5 #过滤器优先权
+  enable_page: all # 应用页面
+  exclude:
+    # - /posts/
+    # - /about/
+  layout: # 挂载容器类型
+    type: class
+    name: sticky_layout
+    index: 0
+  # loading: /img/loading.gif #加载动画自定义
 
 # other
 # --------------------------------------

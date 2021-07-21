@@ -522,6 +522,13 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hexo-butterfly-clock@^1.0.6:
+  version "1.0.6"
+  resolved "http://47.96.89.84:8181/repository/npm-group/hexo-butterfly-clock/-/hexo-butterfly-clock-1.0.6.tgz#688fb089f3a089aa3be05f7fbde689b1bec8f35a"
+  integrity sha1-aI+wifOgiao74F9/veaJsb7I81o=
+  dependencies:
+    pug "^3.0.0"
+
 hexo-cli@^4.0.0:
   version "4.3.0"
   resolved "http://47.96.89.84:8181/repository/npm-group/hexo-cli/-/hexo-cli-4.3.0.tgz#4bb2bf11a30fae601f2f53ac0cb833fee3187649"
@@ -1170,7 +1177,7 @@ pug-walk@^2.0.0:
   resolved "http://47.96.89.84:8181/repository/npm-group/pug-walk/-/pug-walk-2.0.0.tgz#417aabc29232bb4499b5b5069a2b2d2a24d5f5fe"
   integrity sha1-QXqrwpIyu0SZtbUGmistKiTV9f4=
 
-pug@^3.0.2:
+pug@^3.0.0, pug@^3.0.2:
   version "3.0.2"
   resolved "http://47.96.89.84:8181/repository/npm-group/pug/-/pug-3.0.2.tgz#f35c7107343454e43bc27ae0ff76c731b78ea535"
   integrity sha1-81xxBzQ0VOQ7wnrg/3bHMbeOpTU=
