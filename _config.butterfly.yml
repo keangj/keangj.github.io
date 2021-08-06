@@ -101,10 +101,17 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-# index_img: https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg
-# index_img: https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg
-index_img: https://w.wallhaven.cc/full/l3/wallhaven-l3w2yq.jpg
-# index_img: https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg
+index_img: http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3yd6tcj23hu1o0x6p.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3qynztj21hc0u07ot.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3rlcv8j231c1pi7wh.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3j6d4uj21hc0u8n7a.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3yd6tcj23hu1o0x6p.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x48bqajj22bc1jkhdv.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3isjsgj235s1rzwp5.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3irwvqj21hc0u0wkk.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x3y9mqpj21z4140qv7.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x4acb6aj235s1bmhdv.jpg
+# http://ww1.sinaimg.cn/large/7502b9cbly1gt6x43it6rj21hc0u0kjm.jpg
 
 # If the banner of page not setting, it will show the top_img
 default_top_img:
