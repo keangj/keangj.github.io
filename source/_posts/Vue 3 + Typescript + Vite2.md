@@ -9,7 +9,7 @@ categories:
 cover: https://cn.vitejs.dev/logo.svg
 ---
 
-初始化项目
+## 初始化项目
 
 ``` sh
 yarn create vite <project name> --template vue-ts
