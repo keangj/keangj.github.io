@@ -670,6 +670,10 @@ axios.interceptors.response.use(
 export default axios
 ```
 
+## 完整项目
+
+[项目地址](https://github.com/keangj/vue3-vite-demo)
+
 
 ## 参考
 
