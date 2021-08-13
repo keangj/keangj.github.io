@@ -9,7 +9,7 @@ categories:
 cover: https://cn.vitejs.dev/logo.svg
 ---
 
-安装
+初始化项目
 
 ``` sh
 yarn create vite <project name> --template vue-ts
@@ -671,4 +671,7 @@ export default axios
 ```
 
 
+## 参考
 
+- [1] [备战2021：vite工程化实践，建议收藏](https://juejin.cn/post/6910014283707318279#heading-9)
+- [2] [从 0 开始手把手带你搭建一套规范的 Vue3.x 项目工程环境](https://juejin.cn/post/6951649464637636622#heading-8)
