@@ -103,14 +103,14 @@ disable_top_img: false
 # The banner image of home page
 index_img: https://unpkg.zhimg.com/keangj-assets/img/sky.jpg
 # If the banner of page not setting, it will show the top_img
-default_top_img:
+default_top_img: https://unpkg.zhimg.com/keangj-assets/img/forest.jpg
 
 # The banner image of archive page
-archive_img:
+archive_img: https://unpkg.zhimg.com/keangj-assets/img/car.jpg
 
 # If the banner of tag page not setting, it will show the top_img
 # note: tag page, not tags page (子標籤頁面的 top_img)
-tag_img:
+tag_img: https://unpkg.zhimg.com/keangj-assets/img/sunset.jpg
 
 # The banner image of tag page
 # format:
@@ -119,7 +119,7 @@ tag_per_img:
 
 # If the banner of category page not setting, it will show the top_img
 # note: category page, not categories page (子分類頁面的 top_img)
-category_img:
+category_img: https://unpkg.zhimg.com/keangj-assets/img/starry.jpg
 
 # The banner image of category page
 # format:
@@ -592,8 +592,8 @@ display_mode: light
 beautify:
   enable: true
   field: post # site/post
-  title-prefix-icon: '\f0c1'
-  title-prefix-icon-color: '#F47466'
+  title-prefix-icon: '\f292'
+  title-prefix-icon-color: '#15aabf'
 
 # Global font settings
 # Don't modify the following settings unless you know how they work (非必要不要修改)
