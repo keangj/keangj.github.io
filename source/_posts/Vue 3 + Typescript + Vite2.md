@@ -331,7 +331,8 @@ yarn add --dev lint-staged
 安装依赖
 
 ``` sh
-yarn add --dev jest  @types/jest ts-node vue-jest@next @vue/test-utils@next
+yarn add --dev jest  @types/jest vue-jest@next @vue/test-utils@next
+yarn add --dev ts-jest @babel/preset-env @babel/preset-typescript
 ```
 
 添加 `jest.config.ts`
@@ -345,12 +346,6 @@ npx jest --init
 √ Automatically clear mock calls and instances between every test? ... yes
 ```
 
-### 使用 `ts-jest` 
-
-``` sh
-yarn add --dev ts-jest
-```
-
 修改 `jest.config.ts`
 
 ``` ts
@@ -358,79 +353,27 @@ module.exports = {
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.vue$": "vue-jest",
-    '^.+\\.(j|t)sx?$': 'ts-jest'
+    '^.+\\.(j|t)sx?$': [
+      'babel-jest',
+      {
+        presets: [
+          ['@babel/preset-env', { targets: { node: 'current' } }],
+          ['@babel/preset-typescript']
+        ],
+        plugins: ['@vue/babel-plugin-jsx']
+      }
+    ]
   },
   moduleFileExtensions: ['vue', 'js', 'jsx', 'ts', 'tsx', 'json', 'node'],
   testMatch: ["**/tests/**/*.spec.(js|ts)", "**/__tests__/**/*.spec.(js|ts)"],
-  moduleNameMapper: {
-    "^main(.*)$": "<rootDir>/src$1",
-  },
+  testPathIgnorePatterns: ['/node_modules/']
 }
 ```
 
 
+### 解决报错
 
-### 或者使用 `babel`
-
-``` sh
-yarn add --dev @babel/preset-typescript @babel/preset-env
-```
-
-
-修改 `jest.config.ts`
-
-
-``` js
-module.exports = {
-	transform: {	// 预处理器查找拓展名
-    "^.+\\.vue$": "vue-jest",
-    '^.+\\.(j|t)sx?$': 'babel-jest'
-  },
-  moduleFileExtensions: ['vue', 'js', 'jsx', 'ts', 'tsx', 'json', 'node'],	// 查找的文件拓展名
-  testMatch: [
-    "**/tests/**/*.(spec|test).[jt]s?(x)",
-    "**/__tests__/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)"
-  ],	// 匹配测试文件
-  moduleNameMapper: {
-    "^main(.*)$": "<rootDir>/src$1",
-  },
-}
-```
-
-添加 `babel.config.js`
-
-``` ts
-module.exports = {
-  presets:
-    process.env.NODE_ENV === 'test'
-      ? [
-          ['@babel/preset-env', { targets: { node: 'current' } }],
-          [
-            '@babel/preset-typescript',
-            {
-              allExtensions: true,
-              isTSX: true,
-              jsxPragma: 'h',
-              jsxPragmaFrag: 'Fragment'
-            }
-          ]
-        ]
-      : [
-          [
-            '@babel/preset-env',
-            {
-              targets: '>2%, not IE 11'
-            }
-          ]
-        ]
-}
-```
-
-
-## 解决报错
-
-###  `TypeError: Cannot destructure property 'config' of 'undefined' as it is undefined.`
+####  `TypeError: Cannot destructure property 'config' of 'undefined' as it is undefined.`
 
 将 jest 和 ts-jest(babel-jest)版本从 27 改为 26
 
@@ -438,7 +381,7 @@ module.exports = {
 yarn add --dev ts-jest@26.5.6 jest@26.6.3
 ```
 
-### `TS7016: Could not find a declaration file for module '@vue/test-utils'.`
+#### `TS7016: Could not find a declaration file for module '@vue/test-utils'.`
 
 添加 `<file name>.d.ts`
 
@@ -679,3 +622,4 @@ export default axios
 
 - [1] [备战2021：vite工程化实践，建议收藏](https://juejin.cn/post/6910014283707318279#heading-9)
 - [2] [从 0 开始手把手带你搭建一套规范的 Vue3.x 项目工程环境](https://juejin.cn/post/6951649464637636622#heading-8)
+
