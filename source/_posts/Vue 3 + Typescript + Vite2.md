@@ -389,6 +389,21 @@ yarn add --dev ts-jest@26.5.6 jest@26.6.3
 declare module '@vue/test-utils';
 ```
 
+#### 解决测试文件引入样式无法识别的问题 [<sup>1</sup>](https://jestjs.io/zh-Hans/docs/webpack#%E6%A8%A1%E6%8B%9F-css-%E6%A8%A1%E5%9D%97)
+
+在 `jest.config.ts` 添加
+
+``` ts
+// ...
+moduleNameMapper: {
+  '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.ts',
+  '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.ts'
+},
+// ...
+```
+
+并在项目目录下创建 `__mocks__/fileMock.ts` 和 `__mocks__/styleMock.ts`
+
 
 
 ## 提交规范
