@@ -21,7 +21,7 @@ yarn init -y
 yarn add webpack webpack-cli --dev
 ```
 
-根目录创建 `.webpack.config.js` 并添加以下内容
+根目录创建 `webpack.config.js` 并添加以下内容
 
 ``` js
 module.exports = {
@@ -67,26 +67,27 @@ node 12
 yarn add babel-loader @babel/core @babel/preset-env --dev
 ```
 
-在 `webpack.config.js` 里添加
+1. 新建 `babel.config.js`
 
-``` js
-module: {
-  rules: [
-      {
-          test: /\.jsx?$/,	// 匹配以 .js、.jsx 结尾的文件
-          exclude: /node_modules/,	// 排除文件夹 node_modules
-          use: {	// 使用的 babel-loader
-              loader: 'babel-loader',
-              options: {
-                  presets: [
-                      ['@babel/preset-env']
-                  ]
-              }
+   ``` js
+   module.exports = {
+       presets: ['@babel/preset-env']
+   }
+   ```
+
+2. 在 `webpack.config.js` 里添加
+
+    ``` js
+    module: {
+      rules: [
+          {
+              test: /\.jsx?$/,	// 匹配以 .js、.jsx 结尾的文件
+              exclude: /node_modules/,	// 排除文件夹 node_modules
+              use: ['babel-loader']	// 使用的 babel-loader
           }
-      }
-  ]
-}
-```
+      ]
+    }
+    ```
 
 ### 支持 `React`
 
@@ -143,9 +144,99 @@ module.exports = {
 }
 ```
 
+### 添加 `dev server`
+
+安装依赖
+
+``` sh
+yarn add --dev webpack-dev-server
+```
+
+在 `package.json` 中添加
+
+``` json	
+"scripts": {
+  "serve": "webpack serve"
+},
+```
+
+在 `webpack.config.js` 中添加
+
+``` js
+devServer: {
+  port: 3000,	// 端口号
+  hot: true,	// 开启热更新
+  hotOnly: true,
+  compress: true, // gzip 压缩
+  historyApiFallback: true
+}
+```
+
+
+
+### 添加 `VUE` 
+
+安装 `vue` 依赖
+
+``` sh
+yarn add --dev vue-loader@next @vue/compiler-sfc
+yarn add vue@next
+```
+
+在 src 目录下添加 App.vue
+
+``` vue
+<template>
+  <div class="test">hi</div>
+</template>
+
+<script>
+export default {
+  name: "App"
+}
+</script>
+
+<style scoped>
+  .test {
+    color: red;
+  }
+</style>
+```
+
+修改 index.ts 为 main.ts 并添加内容
+
+``` ts
+import { createApp } from 'vue'
+import App from './App.vue'
+// ...
+createApp(App).mount('#app')
+```
+
+在 webpack.config.js 添加
+
+``` js
+const { VueLoaderPlugin } = require('vue-loader/dist/index')
+module: {
+  rules: [
+    {
+      test: /\.vue$/,
+      exclude: /node_modules/,
+      use: ['vue-loader']
+    }
+  ]
+}
+plugins: [
+  new VueLoaderPlugin()
+]
+```
+
+
+
+
+
 ### 添加 `react`规则
 
-安装 `eslint` 依赖
+安装 `react` 依赖
 
 ``` sh
 yarn add eslint-config-react-app eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks --dev
@@ -208,26 +299,42 @@ yarn add typescript @babel/preset-typescript --dev
 npx tsc --init
 ```
 
+修改 `src/index.js` 为 `src/index.ts`
+
+修改 `package.json`
+
+``` json
+// ...
+"scripts": {
+  "build": "tsc --noEmit && webpack"
+},
+// ...
+```
+
+修改 `babel.config.js`
+
+``` js
+module.exports = {
+    presets: [
+        ['@babel/preset-env'],
+        ['@babel/preset-typescript']
+        // ...
+    ]
+}
+```
+
 修改 `webpack.config.js`
 
 ``` js
 module.exports = {
   // ...
+  entry: './src/index.ts',
   module: {
     rules: [
       {
         test: /\.[jt]sx?$/,	// 匹配 ts 文件
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env'],
-              ['@babel/preset-react', { runtime: 'classic' }],
-              ['@babel/preset-typescript']	// 添加 ts 规则
-            ]
-          }
-        }
+        use: ['babel-loader']
       }
     ]
   }
@@ -317,16 +424,17 @@ const path = require('path');
 
 module.exports = {
   // ...
-    resolve: {
+  resolve: {
     alias: {
       '@': path.resolve(__dirname, './src/')
-    }
+    },
+    extensions: [".json", ".ts", ".js", "..."]
   },
   // ...
 }
 ```
 
-### 支持 `SCSS`
+### 支持 `CSS ` 和 `SCSS`
 
 安装依赖
 
@@ -436,6 +544,13 @@ module.exports = {
   module: {
     rules: [
 	// ...
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
+      },
       {
         test: /\.less$/i,
         use: [
@@ -601,7 +716,7 @@ module.exports = {
 
 ```
 
-### 把 `CSS`打包为单独文件
+### 自动生成 index.html
 
 安装依赖
 
@@ -609,16 +724,63 @@ module.exports = {
 yarn add html-webpack-plugin --dev
 ```
 
+新建 `public/index.html`
+
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>app</title>
+<script defer src="main.js"></script></head>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
+</html>
+```
+
+
+
 在 `webpack.config.js` 中添加
 
 ``` js
 // ...
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode,
   plugins: [
     // ...
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: './public/index.html'
+    })
+  ].filter(Boolean),
+  // ...
+}
+
+```
+
+### 
+
+### 把 `CSS`打包为单独文件
+
+安装依赖
+
+``` sh
+yarn add mini-css-extract-plugin --dev
+```
+
+在 `webpack.config.js` 中添加
+
+``` js
+// ...
+const MiniCssExtractPlugin  = require('mini-css-extract-plugin');
+module.exports = {
+  mode,
+  plugins: [
+    // ...
+    new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
   ].filter(Boolean),
   // ...
 }
@@ -652,6 +814,10 @@ module.exports = {
 }
 
 ```
+
+
+
+
 
 ### 优化
 
