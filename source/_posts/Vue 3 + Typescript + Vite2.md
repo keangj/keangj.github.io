@@ -2,6 +2,7 @@
 title: Vue 3 + Typescript + Vite2
 tags: [Vite, Vue, Typescript]
 date: 2021-08-10
+updated: 2021-08-20
 categories: 
   - ['Vite']
   - ['Vue']

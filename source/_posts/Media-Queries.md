@@ -1,9 +1,10 @@
 ---
 title: Media Queries
 date: 2018-02-18 18:11:46
-updated:
+updated: 2018-02-18 18:11:46
 tags: CSS
-categories: CSS
+categories: 
+  - ['CSS']
 cover: https://titangene.github.io/images/cover/css.png
 ---
 ## Media Queries 

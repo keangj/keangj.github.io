@@ -1,7 +1,10 @@
 ---
 title: VuePress
 date: 2018-12-17 18:03:50
+updated: 2021-08-20
 tags: VuePress
+categories: 
+  - ['VuePress']
 cover:  https://miro.medium.com/max/1200/1*qHsE-PM5TLmqzmYjmlr6-A.png
 ---
 # VuePress

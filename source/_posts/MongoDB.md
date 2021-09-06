@@ -1,7 +1,10 @@
 ---
 title: mongoDB
 date: 2019-04-05 20:17:14
+updated: 2019-04-05 20:17:14
 tags: MongoDB
+categories: 
+  - ['MongoDB']
 cover: https://1000logos.net/wp-content/uploads/2020/08/MongoDB-Logo.png
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: RESTful API
 date: 2018-08-19 18:25:46
+updated: 2018-08-19 18:25:46
 tags:
+categories: 
 cover: https://res.cloudinary.com/practicaldev/image/fetch/s--RK-AgEnh--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/i/1s3bedypkt7zm8maikzg.png
 ---
 

@@ -1,7 +1,10 @@
 ---
 title: TypeScript
 date: 2019-07-26 17:18:47
+updated:
 tags: TypeScript
+categories: 
+  - ['Typescript']
 cover: https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/09/typescript.png
 ---
 
