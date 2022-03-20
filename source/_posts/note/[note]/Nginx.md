@@ -88,59 +88,206 @@ server {
   server_name localhost;	# 服务名，域名
   default_type text/html; # 为当前 server 设置类型，不设置默认使用全局默认类型
   
-  # set $<variableName> <vlaue>
-  set $path /test
-  location /set {
-  	root $path
-  }
+  location / {
+		root /example;	# 静态服务器 example 目录
+		index index.html index.htm;	# 默认访问 index.html 文件
+	}
+}
+```
+
+### location 优先级
+
+``` sh
+# location[= | ~ | ~* | ^~] <path> { ... }
+# = 进行普通字符精确匹配。也就是完全匹配。
+# ^~ 前缀匹配。如果匹配成功，则不再匹配其他location。
+# ~ 表示执行一个正则匹配，区分大小写
+# ~* 表示执行一个正则匹配，不区分大小写
+# /xxx/ 常规字符串路径匹配
+# / 通用匹配，任何请求都会匹配到
+location / {	# 优先级最低
+	root /example;	# 静态服务器 example 目录
+	index index.html index.htm;	# 默认访问 index.html 文件
+}
+
+location = /example { # '=' 优先级最高
+	# ...
+}
+location ^~ /example {	# '^~' 优先级次高
+	# ...
+}
+location ~ <RegExp> {	# 正则表达式 优先级次次高
+	# ...
+}
+# 同优先级，匹配第一个
+location ~ ^/\w {	# 第一个被匹配
+	# ...
+}
+location ~ ^/\[a-z] {
+	# ...
+}
+```
+
+### 其他
+
+#### return
+
+``` sh
+# 返回 http 状态码
+location /example {
+	# return <status code> <url>
+	return 301 http://www.examole.com;
+}
+```
+
+#### error_page
+
+``` sh
+
+location /example {
+	# error_page <status code> <url>
+	error_page 404 /404.html;
+}
+```
+
+#### rewrite
+
+``` sh
+# 
+location /example {
+	# 
+	rewrite 
+}
+```
+
+#### log
+
+``` sh
+# 需将 gzip 设置为 on
+log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+access_log  /usr/local/etc/nginx/logs/host.access.log  main;
+
+gzip  on;
+```
+
+#### deny
+
+``` sh
+# 禁止访问
+location /example {
+	root $doc_root;
+	deny all;
+}
+```
+
+#### 变量
+
+``` sh
+# set $<variableName> <vlaue>
+set $path /test
+location /set {
+	root $path
+}
+
+$args ：#这个变量等于请求行中的参数，同$query_string
+
+
+$content_length ：请求头中的Content-length字段。
+
+
+$content_type ：请求头中的Content-Type字段。
+
+
+$document_root ：当前请求在root指令中指定的值。
+
+
+$host ：请求主机头字段，否则为服务器名称。
+
+
+$http_user_agent ：客户端agent信息
+
+
+$http_cookie ：客户端cookie信息
+
+
+$limit_rate ：这个变量可以限制连接速率。
+
+
+$request_method ：客户端请求的动作，通常为GET或POST。
+
+
+$remote_addr ：客户端的IP地址。
+
+
+$remote_port ：客户端的端口。
+
+
+$remote_user ：已经经过Auth Basic Module验证的用户名。
+
+
+$request_filename ：当前请求的文件路径，由root或alias指令与URI请求生成。
+
+
+$scheme ：HTTP方法（如http，https）。
+
+
+$server_protocol ：请求使用的协议，通常是HTTP/1.0或HTTP/1.1。
+
+
+$server_addr ：服务器地址，在完成一次系统调用后可以确定这个值。
+
+
+$server_name ：服务器名称。
+
+
+$server_port ：请求到达服务器的端口号。
+
+
+$request_uri ：包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”。
+
+
+$uri ：不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”。
+
+
+$document_uri ：与$uri相同
+```
+
+
+
+
+
+## Nginx 常见功能
+
+
+
+### 反向代理
+
+``` sh
+server {
+  listen 80;	# 监听 80 端口
+  server_name localhost;	# 服务名，域名
+  default_type text/html; # 为当前 server 设置类型，不设置默认使用全局默认类型
   
-	# location[= | ~ | ~* | ^~] <path> { ... }
-	# = 进行普通字符精确匹配。也就是完全匹配。
-	# ^~ 前缀匹配。如果匹配成功，则不再匹配其他location。
-	# ~ 表示执行一个正则匹配，区分大小写
-	# ~* 表示执行一个正则匹配，不区分大小写
-	# /xxx/ 常规字符串路径匹配
-	# / 通用匹配，任何请求都会匹配到
-  location / {	# 优先级最低
-  	root /example;	# 静态服务器 example 目录
-  	index index.html index.htm;	# 默认访问 index.html 文件
-  }
-  
+  # proxy_pass 为反向代理
   # proxy_pass url 末尾不带 '/' 时，连同匹配到的 /test/ 路径一起进行反向代理 
   location /test {	# /test/xxx => http://example.com/test/xxx
-  	proxy_pass http://example.com;
+    proxy_pass http://example.com;
   }
   # proxy_pass url 末尾带 '/' 时，省略了匹配到的 /test/ 路径
   location /test/ { # /test/xxx => http://example.com/xxx
-  	proxy_pass http://example.com/;
+    proxy_pass http://example.com/;
   }
 
   location /api {	# 将 localhost:80/api 反向代理到 http://api.example.com
-  	proxy_pass http://api.example.com;	# proxy_pass 为反向代理
-  }
-  
-  location = /example { # '=' 优先级最高
-  	# ...
-  }
-  location ^~ /example {	# '^~' 优先级次高
-  	# ...
-  }
-  location ~ <RegExp> {	# 正则表达式 优先级次次高
-  	# ...
-  }
-  # 同优先级，匹配第一个
-  location ~ ^/\w {	# 第一个被匹配
-  	# ...
-  }
-  location ~ ^/\[a-z] {
-  	# ...
+    proxy_pass http://api.example.com;
   }
 }
 ```
 
 
-
-## Nginx 常见功能
 
 ### 访问限制
 
@@ -188,10 +335,28 @@ server {
 ``` sh
 # servers/<file name>.conf
 upstream balance {
-# weight 为权重，权重越大访问概率越高。
+# weight 为权重，权重越大访问概率越高；不配置权重默认配置为轮询。
 	server 127.0.0.1:8080 weight=1;	
 	server 127.0.0.1:8081;
+	server 127.0.0.1:8082 backup;	#	backup 为备用服务器，只有其他服务器宕机的情况下才会使用。
 }
+upstream test {
+	fair;	# 设置 fair 可以按服务器的响应时间来分配请求，响应时间短的优先分配, 需安装第三方插件。
+	server localhost:8080;
+	server localhost:8081;
+}
+upstream test2 {
+	ip_hash;	# 
+	server localhost:8080;
+	server localhost:8081;
+}
+upstream test3 {
+	hash $requst_url;	# url_hash 需安装第三方插件。
+	hash_method crc32;
+	server localhost:8080;
+	server localhost:8081;
+}
+
 server {
   listen 80;	# 监听 80 端口
   server_name example.com;	# 服务名
