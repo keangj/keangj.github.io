@@ -37,14 +37,15 @@ ps aux|grep nginx	# 查看进程
 ``` sh
 # nginx.config
 # nginx 全局配置 start
-#user  nobody;
+#user  nobody;	# 运行用户
 worker_processes  1; # 并发处理服务，值越大，并发数越多。
 
+# 错误日志
 #error_log  logs/error.log;
 #error_log  logs/error.log  notice;
 #error_log  logs/error.log  info;
 
-#pid        logs/nginx.pid;
+#pid        logs/nginx.pid;	# pid 位置
 
 # nginx 全局配置 end
 
@@ -62,11 +63,12 @@ http {	# http 配置
   proxy_busy_buffers_size 20480k;
   proxy_temp_file_write_size 20480k;
 
+	# 设置日志
   log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
   '$status $body_bytes_sent "$http_referer" '
   '"$http_user_agent" "$http_x_forwarded_for"';
 
-  #access_log  logs/access.log  main;
+  #access_log  logs/access.log  main;	# 设置日志存放位置
 
   sendfile        on;
   #tcp_nopush     on;
@@ -143,7 +145,6 @@ location /example {
 #### error_page
 
 ``` sh
-
 location /example {
 	# error_page <status code> <url>
 	error_page 404 /404.html;
@@ -173,16 +174,6 @@ access_log  /usr/local/etc/nginx/logs/host.access.log  main;
 gzip  on;
 ```
 
-#### deny
-
-``` sh
-# 禁止访问
-location /example {
-	root $doc_root;
-	deny all;
-}
-```
-
 #### 变量
 
 ``` sh
@@ -193,65 +184,25 @@ location /set {
 }
 
 $args ：#这个变量等于请求行中的参数，同$query_string
-
-
-$content_length ：请求头中的Content-length字段。
-
-
-$content_type ：请求头中的Content-Type字段。
-
-
-$document_root ：当前请求在root指令中指定的值。
-
-
-$host ：请求主机头字段，否则为服务器名称。
-
-
+$content_length ：请求头中的Content-length字段
+$content_type ：请求头中的Content-Type字段
+$document_root ：当前请求在root指令中指定的值
+$host ：请求主机头字段，否则为服务器名称
 $http_user_agent ：客户端agent信息
-
-
 $http_cookie ：客户端cookie信息
-
-
-$limit_rate ：这个变量可以限制连接速率。
-
-
-$request_method ：客户端请求的动作，通常为GET或POST。
-
-
-$remote_addr ：客户端的IP地址。
-
-
-$remote_port ：客户端的端口。
-
-
-$remote_user ：已经经过Auth Basic Module验证的用户名。
-
-
-$request_filename ：当前请求的文件路径，由root或alias指令与URI请求生成。
-
-
-$scheme ：HTTP方法（如http，https）。
-
-
-$server_protocol ：请求使用的协议，通常是HTTP/1.0或HTTP/1.1。
-
-
-$server_addr ：服务器地址，在完成一次系统调用后可以确定这个值。
-
-
-$server_name ：服务器名称。
-
-
-$server_port ：请求到达服务器的端口号。
-
-
-$request_uri ：包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”。
-
-
-$uri ：不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”。
-
-
+$limit_rate ：这个变量可以限制连接速率
+$request_method ：客户端请求的动作，通常为GET或POST
+$remote_addr ：客户端的IP地址
+$remote_port ：客户端的端口
+$remote_user ：已经经过Auth Basic Module验证的用户名
+$request_filename ：当前请求的文件路径，由root或alias指令与URI请求生成
+$scheme ：HTTP方法（如http，https）
+$server_protocol ：请求使用的协议，通常是HTTP/1.0或HTTP/1.1
+$server_addr ：服务器地址，在完成一次系统调用后可以确定这个值
+$server_name ：服务器名称
+$server_port ：请求到达服务器的端口号
+$request_uri ：包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”
+$uri ：不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”
 $document_uri ：与$uri相同
 ```
 
@@ -259,7 +210,7 @@ $document_uri ：与$uri相同
 
 
 
-## Nginx 常见功能
+## Nginx 常用功能
 
 
 
@@ -291,9 +242,26 @@ server {
 
 ### 访问限制
 
+``` sh
+# 禁止访问 deny
+location /example {
+	root $doc_root;
+	deny all;
+}
+
+location / {	# 规则自上而下匹配
+	deny <ip>; # 禁止某个 ip
+	allow <ip>; # 允许某个 ip
+	deny all;
+}
+```
+
 
 
 ### 跨域
+
+``` sh
+```
 
 
 
@@ -316,10 +284,10 @@ server {
   ssl_session_timeout  5m;
   # 使用服务器端端首选算法
   ssl_prefer_server_ciphers on;
+  # 支持 ssl 协议
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
   # 加密算法
   ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
-
 
   location / {
   	# 配置静态文件路径
@@ -367,12 +335,15 @@ server {
   }
 
   location / {
-  	proxy_pass http://balance/;
+  	proxy_pass http://balance;
   }
 }
 ```
 
 ### 动静分离
+
+``` sh
+```
 
 
 
