@@ -1,8 +1,11 @@
 ---
 title: Nginx
 date: 2022-03-12 21:34:37
+updated: 2022-03-15 19:04:48
 tags: Nginx
-cover: 
+categories: 
+  - ['Nginx']
+cover: https://knight-li.com/storage/images/blog/B-09202111/B-09202111_L.jpg
 
 ---
 
