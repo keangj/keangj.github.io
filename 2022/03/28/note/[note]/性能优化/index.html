@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>日常小记 | 日常小记</title><meta name="author" content="Jay"><meta name="copyright" content="Jay"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DNS（domain name system）TCP（Transmission Control Protocol） 连接的三次握手四次挥手SYN 是 synchronize(同步)的缩写同步不是「同步异步」中的同步，而是「同步信息」中的同步ACK 是 acknowledge(获悉)的缩写  三次握手第三次握手是为了确保客户端(A端)能接收到服务端(B端)的数据  A-&gt;B: SYN(x)B-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日常小记">
+<meta property="og:url" content="https://keangj.github.io/2022/03/28/note/[note]/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="日常小记">
+<meta property="og:description" content="DNS（domain name system）TCP（Transmission Control Protocol） 连接的三次握手四次挥手SYN 是 synchronize(同步)的缩写同步不是「同步异步」中的同步，而是「同步信息」中的同步ACK 是 acknowledge(获悉)的缩写  三次握手第三次握手是为了确保客户端(A端)能接收到服务端(B端)的数据  A-&gt;B: SYN(x)B-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg">
+<meta property="article:published_time" content="2022-03-28T14:48:01.516Z">
+<meta property="article:modified_time" content="2022-03-28T14:48:01.516Z">
+<meta property="article:author" content="Jay">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg"><link rel="shortcut icon" href="http://ww1.sinaimg.cn/large/7502b9cbly1gsqp2ri9poj20xc0xcjvo.jpg"><link rel="canonical" href="https://keangj.github.io/2022/03/28/note/[note]/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Jay","link":"链接: ","source":"来源: 日常小记","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '日常小记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-28 14:48:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-clock/lib/clock.min.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/26164191?s=400&amp;u=132d7e53e4f5b1e23d795ae9f79daad3b875de06&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">日常小记</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-28T14:48:01.516Z" title="更新于 2022-03-28 14:48:01">2022-03-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">946</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/03/28/note/%5Bnote%5D/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/#post-comment"><span id="twikoo-count"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="DNS（domain-name-system）"><a href="#DNS（domain-name-system）" class="headerlink" title="DNS（domain name system）"></a>DNS（domain name system）</h2><h2 id="TCP（Transmission-Control-Protocol）-连接的三次握手四次挥手"><a href="#TCP（Transmission-Control-Protocol）-连接的三次握手四次挥手" class="headerlink" title="TCP（Transmission Control Protocol） 连接的三次握手四次挥手"></a>TCP（Transmission Control Protocol） 连接的三次握手四次挥手</h2><p>SYN 是 synchronize(同步)的缩写同步不是「同步异步」中的同步，而是「同步信息」中的同步<br>ACK 是 acknowledge(获悉)的缩写</p>
+<ul>
+<li>三次握手<br>第三次握手是为了确保客户端(A端)能接收到服务端(B端)的数据<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line">A-&gt;B: SYN(x)</span><br><span class="line">B--&gt;A: ACK(x+1) SYN(y)</span><br><span class="line">A-&gt;B: ACK(y+1)</span><br><span class="line">A-&gt;B: HTTP 内容</span><br><span class="line">B--&gt;A: HTTP 内容</span><br><span class="line">Note right of B: 对象B的描述</span><br><span class="line">Note left of A: 对象A的描述(提示)</span><br></pre></td></tr></table></figure></li>
+<li>四次挥手<br>第二、三次挥手中间往往会有其他数据需要发送，故不能合并</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A-&gt;B: FIN(x)</span><br><span class="line">B--&gt;A: ACK(x+1)</span><br><span class="line">B--&gt;A: FIN(y)</span><br><span class="line">A-&gt;B: ACK(y+1)</span><br><span class="line">Note right of B: 对象B的描述</span><br><span class="line">Note left of A: 对象A的描述(提示)</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><h2 id="浏览器渲染"><a href="#浏览器渲染" class="headerlink" title="浏览器渲染"></a>浏览器渲染</h2><h3 id="HTML-解析被-JS-阻塞"><a href="#HTML-解析被-JS-阻塞" class="headerlink" title="HTML 解析被 JS 阻塞"></a>HTML 解析被 JS 阻塞</h3><p>因为执行 JS 可能会修改 HTML DOM 树，所以 JS 的下载和执行会阻塞 HTML 解析</p>
+<h3 id="script-标签-async-和-defer-的区别"><a href="#script-标签-async-和-defer-的区别" class="headerlink" title="script 标签 async 和 defer 的区别"></a>script 标签 async 和 defer 的区别</h3><ul>
+<li>defer<br>可以使 HTML 的解析和 JS 的下载同时进行<br>使 JS 执行在 HTML 解析之后，DOM ready 之前<br>多个 script 有 defer，  JS 按顺序执行</li>
+<li>async<br>可以使 HTML 的解析和 JS 的下载同时进行<br>JS 下载后，立即执行</li>
+</ul>
+<h3 id="CSS-阻塞-JS-执行"><a href="#CSS-阻塞-JS-执行" class="headerlink" title="CSS 阻塞 JS 执行"></a>CSS 阻塞 JS 执行</h3><p>因为 JS 需要获取 CSS 解析的结果，所以CSS 的下载和解析会阻塞 JS 执行</p>
+<h3 id="页面渲染"><a href="#页面渲染" class="headerlink" title="页面渲染"></a>页面渲染</h3><h2 id="连接的服用与并行化"><a href="#连接的服用与并行化" class="headerlink" title="连接的服用与并行化"></a>连接的服用与并行化</h2><h3 id="DNS-预解析"><a href="#DNS-预解析" class="headerlink" title="DNS 预解析"></a>DNS 预解析</h3><ol>
+<li>在 <code>html</code> 文件的 <code>&lt;head&gt;</code> 标签里写</li>
+</ol>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://x.com/&quot;</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+<p>  告诉浏览器页面之后会查询 <code>href</code> 的网站，浏览器会优先进行 <code>DNS</code> 查询</p>
+<ol start="2">
+<li><p>在 <code>html</code> 文件的<strong>响应头</strong>里写</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">    Link: &lt;https://x.com/&gt;; rel=dns-prefetch</span><br><span class="line"></span><br><span class="line"><span class="comment">### TCP 优化</span></span><br><span class="line"></span><br><span class="line">1. 连接复用（Connection: keep-alive）</span><br><span class="line"></span><br><span class="line">  在 `HTTP` 请求头和响应头加上</span><br><span class="line"></span><br><span class="line">  ``` sh</span><br><span class="line">  Connection: keep-alive</span><br><span class="line">  KeepAlive: timeout=5, max=100	// timeout=5：5 秒内不发请求连接关闭；max=100 指请求最多相应 100 次</span><br></pre></td></tr></table></figure></li>
+<li><p>并发连接</p>
+</li>
+<li><p>HTTP 管道化（HTTP pipelining）</p>
+</li>
+</ol>
+<h2 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h2><p>HTTP/1.1 基于字符串，HTTP/2 基于帧（Frame）</p>
+<p>HTTP/2 每一帧包含 Length + Type + Flags + StreamID + Payload 五部分，前四部分是固定长度，为 9 字节，第五部分 Payload 的最大长度为 2<sup>14</sup> 到 2<sup>24</sup> - 1 字节，即 16kb 到 16Mb，具体的最大长度由终端自行决定</p>
+<h2 id="资源合并"><a href="#资源合并" class="headerlink" title="资源合并"></a>资源合并</h2><h2 id="资源内联"><a href="#资源内联" class="headerlink" title="资源内联"></a>资源内联</h2><h2 id="资源压缩"><a href="#资源压缩" class="headerlink" title="资源压缩"></a>资源压缩</h2><p>nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gzip on;	// 开启</span><br><span class="line">gzip_types text/plain application/xml;	// 文件类型</span><br><span class="line">gzip_min_length 1000;	// 文件小于 1000 字节不压缩</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="资源精简"><a href="#资源精简" class="headerlink" title="资源精简"></a>资源精简</h2><ul>
+<li>html: 删空格，删闭合</li>
+<li>css: 删未用</li>
+<li>js: 改名、tree shaking</li>
+<li>svg: 删无用标签、属性</li>
+<li>图片: 减少体积（无损/有损）</li>
+</ul>
+<h2 id="优化cookie"><a href="#优化cookie" class="headerlink" title="优化cookie"></a>优化cookie</h2><p>使用新域名：cookie free</p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>把文件上传到 CDN</p>
+<ol>
+<li>购买服务</li>
+<li>发布时，使用命令行上传文件</li>
+<li>改 HTML <code>&lt;script src=&quot;https://cdn1.com/static/&quot; &lt;/script&gt;</code></li>
+</ol>
+<p>CDN 优点</p>
+<pre><code> 1. cookie free
+ 2. 并行请求 / 多路复用
+ 3. 下载速度快
+</code></pre>
+<p>CDN 缺点</p>
+<ol>
+<li>收费</li>
+<li>部署复杂</li>
+<li>可控性差</li>
+<li>跨域</li>
+</ol>
+<h3 id="CDN-跨域"><a href="#CDN-跨域" class="headerlink" title="CDN 跨域"></a>CDN 跨域</h3><h3 id="HTTP-缓存"><a href="#HTTP-缓存" class="headerlink" title="HTTP 缓存"></a>HTTP 缓存</h3><p>Cache-control</p>
+<p>public : 指定中间设备能否缓存</p>
+<p>max-age: 缓存时间</p>
+<p>must-revalidate: 必须重新校验（内容协商）</p>
+<h3 id="HTTP-内容协商"><a href="#HTTP-内容协商" class="headerlink" title="HTTP 内容协商"></a>HTTP 内容协商</h3><p>If-None-Match: ETag 发送请求 后端验证 ETag 是否变化，没变就返回 304 状态码和空响应；变了就返回 200 状态码和新文件。文件变化后返回的响应包含新的 Cache-Control 就覆盖原有的 Cache-Control，没有新的 Cache-Control 或者 Cache-Control 的 max-age: 0 ，就删除缓存</p>
+<h3 id="服务器禁用缓存"><a href="#服务器禁用缓存" class="headerlink" title="服务器禁用缓存"></a>服务器禁用缓存</h3><p>Cache-Control: max-age: 0, must-revalidate</p>
+<p>Cache-Control: no-cache 不缓存，可协商</p>
+<p>Cache-Control: no-store 不缓存，不可协商</p>
+<h3 id="浏览器禁用缓存"><a href="#浏览器禁用缓存" class="headerlink" title="浏览器禁用缓存"></a>浏览器禁用缓存</h3><ol>
+<li>在 url 的参数加随机数</li>
+<li>请求头加 Cache-Control: ‘no-cache, no-store, max-age: 0’</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jay</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://keangj.github.io/2022/03/28/note/[note]/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">https://keangj.github.io/2022/03/28/note/[note]/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://keangj.github.io" target="_blank">日常小记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/28/note/%5Bnote%5D/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"><img class="prev-cover" src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2022/03/28/note/%5Bnote%5D/%E7%B1%BB/"><img class="next-cover" src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/26164191?s=400&amp;u=132d7e53e4f5b1e23d795ae9f79daad3b875de06&amp;v=4" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jay</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/keangj" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:keangjay@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS%EF%BC%88domain-name-system%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">DNS（domain name system）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%EF%BC%88Transmission-Control-Protocol%EF%BC%89-%E8%BF%9E%E6%8E%A5%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">TCP（Transmission Control Protocol） 连接的三次握手四次挥手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-number">3.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93"><span class="toc-number">4.</span> <span class="toc-text">浏览器渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E8%A7%A3%E6%9E%90%E8%A2%AB-JS-%E9%98%BB%E5%A1%9E"><span class="toc-number">4.1.</span> <span class="toc-text">HTML 解析被 JS 阻塞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#script-%E6%A0%87%E7%AD%BE-async-%E5%92%8C-defer-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.2.</span> <span class="toc-text">script 标签 async 和 defer 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-%E9%98%BB%E5%A1%9E-JS-%E6%89%A7%E8%A1%8C"><span class="toc-number">4.3.</span> <span class="toc-text">CSS 阻塞 JS 执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93"><span class="toc-number">4.4.</span> <span class="toc-text">页面渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9C%8D%E7%94%A8%E4%B8%8E%E5%B9%B6%E8%A1%8C%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">连接的服用与并行化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">DNS 预解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-2"><span class="toc-number">6.</span> <span class="toc-text">HTTP&#x2F;2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%90%88%E5%B9%B6"><span class="toc-number">7.</span> <span class="toc-text">资源合并</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%86%85%E8%81%94"><span class="toc-number">8.</span> <span class="toc-text">资源内联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%8E%8B%E7%BC%A9"><span class="toc-number">9.</span> <span class="toc-text">资源压缩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%B2%BE%E7%AE%80"><span class="toc-number">10.</span> <span class="toc-text">资源精简</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96cookie"><span class="toc-number">11.</span> <span class="toc-text">优化cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN"><span class="toc-number">12.</span> <span class="toc-text">CDN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN-%E8%B7%A8%E5%9F%9F"><span class="toc-number">12.1.</span> <span class="toc-text">CDN 跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E7%BC%93%E5%AD%98"><span class="toc-number">12.2.</span> <span class="toc-text">HTTP 缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86"><span class="toc-number">12.3.</span> <span class="toc-text">HTTP 内容协商</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A6%81%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-number">12.4.</span> <span class="toc-text">服务器禁用缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%A6%81%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-number">12.5.</span> <span class="toc-text">浏览器禁用缓存</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/28/note/%5Bnote%5D/Docker/" title="无题"><img src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/03/28/note/%5Bnote%5D/Docker/" title="无题">无题</a><time datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/28/note/%5Bnote%5D/Eventloop/" title="无题"><img src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/03/28/note/%5Bnote%5D/Eventloop/" title="无题">无题</a><time datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/28/note/%5Bnote%5D/VUE%203/" title="无题"><img src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/03/28/note/%5Bnote%5D/VUE%203/" title="无题">无题</a><time datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/28/note/%5Bnote%5D/VUE%20%E5%93%8D%E5%BA%94%E5%BC%8F/" title="无题"><img src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/03/28/note/%5Bnote%5D/VUE%20%E5%93%8D%E5%BA%94%E5%BC%8F/" title="无题">无题</a><time datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/28/note/%5Bnote%5D/Webpack5/" title="无题"><img src="https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/03/28/note/%5Bnote%5D/Webpack5/" title="无题">无题</a><time datetime="2022-03-28T14:48:01.516Z" title="发表于 2022-03-28 14:48:01">2022-03-28</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://w.wallhaven.cc/full/l3/wallhaven-l3zllq.jpg https://w.wallhaven.cc/full/v9/wallhaven-v9ogyp.jpg https://w.wallhaven.cc/full/8o/wallhaven-8ok3xj.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Jay</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://keangj.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou'
+    }, null))
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://keangj.github.io/2022/03/28/note/[note]/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/'
+    this.page.identifier = '2022/03/28/note/[note]/性能优化/'
+    this.page.title = ''
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://keangj-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Twikoo' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = false;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_injector_config();
+  }
+  </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax src="https://cdn.jsdelivr.net/npm/hexo-butterfly-clock/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>
