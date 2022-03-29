@@ -4,7 +4,7 @@ date: 2018-09-09 11:34:37
 updated: 2018-09-09 11:34:37
 tags: JavaScript
 categories: 
-  - ['JavaScript']
+  - ['Javascript']
 cover: https://library.kissclipart.com/20181128/tsw/kissclipart-orange-clipart-ecmascript-javascript-ecma-internat-3885764678295034.png
 ---
 
