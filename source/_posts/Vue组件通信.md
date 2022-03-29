@@ -5,7 +5,7 @@ updated: 2021-08-20
 tags:	Vue
 categories: 
   - ['Vue']
-cover:  https://miro.medium.com/max/1200/1*qHsE-PM5TLmqzmYjmlr6-A.png
+cover:  https://www.vectorlogo.zone/logos/vuejs/vuejs-ar21.png
 ---
 
 # Vue 组件通信
