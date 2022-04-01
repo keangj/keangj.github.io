@@ -37,7 +37,7 @@ ps aux|grep nginx	# 查看进程
 
 ### 默认配置
 
-``` sh
+``` nginx
 # nginx.config
 # nginx 全局配置 start
 #user  nobody;	# 运行用户
@@ -86,7 +86,7 @@ http {	# http 配置
 
 ```
 
-``` sh
+``` nginx
 # servers/<file name>.conf
 server {
   listen 80;	# 监听 80 端口
@@ -102,7 +102,7 @@ server {
 
 ### location 优先级
 
-``` sh
+``` nginx
 # location[= | ~ | ~* | ^~] <path> { ... }
 # = 进行普通字符精确匹配。也就是完全匹配。
 # ^~ 前缀匹配。如果匹配成功，则不再匹配其他location。
@@ -137,7 +137,7 @@ location ~ ^/\[a-z] {
 
 #### return
 
-``` sh
+``` nginx
 # 返回 http 状态码
 location /example {
 	# return <status code> <url>
@@ -147,7 +147,7 @@ location /example {
 
 #### error_page
 
-``` sh
+``` nginx
 location /example {
 	# error_page <status code> <url>
 	error_page 404 /404.html;
@@ -156,7 +156,7 @@ location /example {
 
 #### rewrite
 
-``` sh
+``` nginx
 # 
 location /example {
 	# 
@@ -166,7 +166,7 @@ location /example {
 
 #### log
 
-``` sh
+``` nginx
 # 需将 gzip 设置为 on
 log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
@@ -179,7 +179,7 @@ gzip  on;
 
 #### 变量
 
-``` sh
+``` nginx
 # set $<variableName> <vlaue>
 set $path /test
 location /set {
@@ -219,7 +219,7 @@ $document_uri ：与$uri相同
 
 ### 反向代理
 
-``` sh
+``` nginx
 server {
   listen 80;	# 监听 80 端口
   server_name localhost;	# 服务名，域名
@@ -245,7 +245,7 @@ server {
 
 ### 访问限制
 
-``` sh
+``` nginx
 # 禁止访问 deny
 location /example {
 	root $doc_root;
@@ -263,7 +263,7 @@ location / {	# 规则自上而下匹配
 
 ### 跨域
 
-``` sh
+``` nginx
 ```
 
 
@@ -274,7 +274,7 @@ location / {	# 规则自上而下匹配
 
 ### HTTPS
 
-``` sh
+``` nginx
 server {
 	# 服务端口为 443，开启 ssl
   listen 443  ssl http2;
@@ -303,7 +303,7 @@ server {
 
 ### 负载均衡
 
-``` sh
+``` nginx
 # servers/<file name>.conf
 upstream balance {
 # weight 为权重，权重越大访问概率越高；不配置权重默认配置为轮询。
@@ -345,7 +345,7 @@ server {
 
 ### 动静分离
 
-``` sh
+``` nginx
 ```
 
 

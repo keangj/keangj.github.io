@@ -441,8 +441,6 @@ arr[0] = 6 // error
 arr.push(6)	// error
 ```
 
-### 
-
 ### Required<T>
 
 返回 T 并将类型所有变为 required

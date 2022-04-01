@@ -1,8 +1,8 @@
 ---
 title: Web3 接入 WalletConnect1.0
 tags: [Vite, Vue3, Typescript, web3]
-date: 2022-03-23
-updated: 2022-03-23
+date: 2022-03-23 20:40:22
+updated: 2022-03-23 20:40:22
 categories: 
   - ['Vite']
   - ['Vue3']
