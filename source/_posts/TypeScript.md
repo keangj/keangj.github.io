@@ -77,7 +77,7 @@ add('hello', 1)	// error
 
 ### any
 
-`any` 可以是任何值
+`any` 为顶级类型（top type），可以是任何值
 
 ``` ts
 let value: any = undefined
@@ -86,30 +86,9 @@ value = ''
 value = []
 ```
 
-### 元组
-
-固定长度数组
-
-``` ts
-let arr: [number, string, boolean] = [1, '', true]
-```
-
-### never
-
-不存在的值
-
-``` ts
-// never, 不能将任何值赋给 never
-let a: never = 1	// error
-let a: never = ''	// error
-let a: never = []	// error
-let a: never = {}	// error
-type T = number & string	// 没有任何值属于 number 和 string 类型，所以 type T = never
-```
-
 ### Unknown
 
-和 `any` 一样，所有的值都可以赋给 `unknown`。
+和 `any` 一样是顶级类型，所有的值都可以赋给 `unknown`。
 
 ``` ts
 let value: unknow = undefined
@@ -138,6 +117,19 @@ a.name	// 类型“unknown”上不存在属性“name”。ts(2339)
 (a as T).name
 ```
 
+### never
+
+never 和 any unknown 相反为底部类型（bottom type），不存在的值
+
+``` ts
+// never, 不能将任何值赋给 never
+let a: never = 1	// error
+let a: never = ''	// error
+let a: never = []	// error
+let a: never = {}	// error
+type T = number & string	// 没有任何值属于 number 和 string 类型，所以 type T = never
+```
+
 ### void
 
 没有类型
@@ -145,6 +137,14 @@ a.name	// 类型“unknown”上不存在属性“name”。ts(2339)
 ``` ts
 // 这个函数没有返回值
 function fn (): void {}
+```
+
+### 元组
+
+固定长度数组
+
+``` ts
+let arr: [number, string, boolean] = [1, '', true]
 ```
 
 

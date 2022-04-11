@@ -12,10 +12,6 @@ cover: https://github.com/ChainSafe/web3.js/blob/1.x/assets/logo/web3js.jpg
 
 # Web3
 
-## 什么是 Web3
-
-
-
 ## 前置准备
 
 - 浏览器安装 *[metamask](https://metamask.io/download/)* 插件
