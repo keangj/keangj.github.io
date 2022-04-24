@@ -6,7 +6,7 @@ updated: 2022-03-28
 categories: 
   - ['Typescript']
   - ['web3']
-cover: https://github.com/ChainSafe/web3.js/blob/1.x/assets/logo/web3js.jpg
+cover: https://logowik.com/content/uploads/images/web36984.jpg
 
 ---
 

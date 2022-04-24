@@ -1,3 +1,14 @@
+---
+title: Docker
+date: 2022-03-29 19:08:00
+updated: 2022-04-22 20:00:00
+tags: Docker
+categories: 
+  - ['Docker']
+cover: https://pbs.twimg.com/media/FQoy4TNXwAkV8he?format=jpg&name=small
+
+---
+
 # Docker
 
 ## 安装 [docker](https://docs.docker.com/engine/install/debian/)
@@ -60,23 +71,26 @@ docker run --name <容器名> -p 8000:3000 -d <your username>/node-web-app
 ## 容器常用操作
 
 ``` sh
-docker start <container id>					// 运行容器
-docker exec -it <container id> bash // 进入容器
-docker kill <container id> 					// 杀死容器
-docker stop <container id> 					// 停止容器
-docker rm <container id>						// 删除容器
-docker restart <container id>				// 重启容器
-docker logs <container id> 					// 查看容器日志
-docker ps 													// 查看正在运行的容器
-docker ps -a 												// 查看所有容器
-docker system prune 								// 删除所有停止的容器
+docker start <container id>	# 运行容器
+docker exec -it <container id> bash	# 进入容器
+docker kill <container id>	# 杀死容器
+docker stop <container id>	# 停止容器
+docker rm <container id>	# 删除容器
+docker restart <container id>	# 重启容器
+docker logs <container id>	# 查看容器日志
+docker ps	# 查看正在运行的容器
+docker ps -a	# 查看所有容器
+docker system prune	# 删除所有停止的容器
 ```
 
 ## 镜像常用操作
 
 ``` sh
-docker build . -t <image name>:<version>	// 创建镜像，不指定 version 默认为 latest
-docker images //镜像列表
+docker build . -t <image name>:<version>	# 创建镜像，不指定 version 默认为 latest
+docker images # 镜像列表, docker image ls 也可以
+docker search <image name> # 查找镜像
+docker pull <image name>	# 拉取镜像
+docker rmi <image id | image name>	# 删除镜像
 ```
 
 
