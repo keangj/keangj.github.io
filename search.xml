@@ -17,9 +17,9 @@
           
           <category> Typescript </category>
           
-          <category> Vue3 </category>
-          
           <category> web3 </category>
+          
+          <category> Vue3 </category>
           
       </categories>
       
@@ -33,6 +33,31 @@
             <tag> Vue3 </tag>
             
             <tag> web3 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker</title>
+      <link href="/2022/03/29/Docker/"/>
+      <url>/2022/03/29/Docker/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 <a href="https://docs.docker.com/engine/install/debian/">docker</a></h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 选择相应的系统版本，跟着文档安装即可</span></span><br><span class="line"><span class="comment"># Debian</span></span><br><span class="line"><span class="comment"># 更新 apt，并安装相应的包</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    gnupg \</span><br><span class="line">    lsb-release</span><br><span class="line"><span class="comment"># 添加 GPG 密钥</span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"><span class="comment"># 设置 docker 仓库</span></span><br><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \</span></span><br><span class="line"><span class="string">  <span class="subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"><span class="comment"># 更新 apt，并安装 docker</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br><span class="line"></span><br><span class="line">apt-cache madison docker-ce</span><br><span class="line"><span class="comment"># or 指定版本</span></span><br><span class="line">sudo apt-get install docker-ce=&lt;VERSION_STRING&gt; docker-ce-cli=&lt;VERSION_STRING&gt; containerd.io</span><br><span class="line"><span class="comment"># 运行 hello world</span></span><br><span class="line">sudo docker run hello-world</span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure><h2 id="安装-docker-compose"><a href="#安装-docker-compose" class="headerlink" title="安装 docker compose"></a>安装 <a href="https://docs.docker.com/compose/install/">docker compose</a></h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载 docker compose</span></span><br><span class="line">sudo curl -L <span class="string">&quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-<span class="subst">$(uname -s)</span>-<span class="subst">$(uname -m)</span>&quot;</span> -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="comment"># 添加权限</span></span><br><span class="line">sudo <span class="built_in">chmod</span> +x /usr/local/bin/docker-compose</span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure><h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker run --name &lt;容器名&gt; -p 8000:3000 -d &lt;your username&gt;/node-web-app</span><br></pre></td></tr></table></figure><table><thead><tr><th align="center">参数</th><th align="left">说明</th></tr></thead><tbody><tr><td align="center">-d</td><td align="left">守护容器，就是后台运行，退出命令窗口容器也不会停止</td></tr><tr><td align="center">-it</td><td align="left">交互式容器 退出命令窗口容器就停止运行了。将容器的 shell 映射到当前的 shell，你在本级窗口输入的命令，会传入容器</td></tr><tr><td align="center">-p</td><td align="left">宿主机端口和容器端口映射，将容器的 3000 端口映射到本机的 8000 端口</td></tr><tr><td align="center">-e</td><td align="left">MYSQL_ROOT_PASSWORD&#x3D;123456：初始化root用户的密码</td></tr></tbody></table><h2 id="容器常用操作"><a href="#容器常用操作" class="headerlink" title="容器常用操作"></a>容器常用操作</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker start &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 运行容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container <span class="built_in">id</span>&gt; bash<span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">kill</span> &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 杀死容器</span></span><br><span class="line">docker stop &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 停止容器</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 删除容器</span></span><br><span class="line">docker restart &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 重启容器</span></span><br><span class="line">docker logs &lt;container <span class="built_in">id</span>&gt;<span class="comment"># 查看容器日志</span></span><br><span class="line">docker ps<span class="comment"># 查看正在运行的容器</span></span><br><span class="line">docker ps -a<span class="comment"># 查看所有容器</span></span><br><span class="line">docker system prune<span class="comment"># 删除所有停止的容器</span></span><br></pre></td></tr></table></figure><h2 id="镜像常用操作"><a href="#镜像常用操作" class="headerlink" title="镜像常用操作"></a>镜像常用操作</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker build . -t &lt;image name&gt;:&lt;version&gt;<span class="comment"># 创建镜像，不指定 version 默认为 latest</span></span><br><span class="line">docker images <span class="comment"># 镜像列表, docker image ls 也可以</span></span><br><span class="line">docker search &lt;image name&gt; <span class="comment"># 查找镜像</span></span><br><span class="line">docker pull &lt;image name&gt;<span class="comment"># 拉取镜像</span></span><br><span class="line">docker rmi &lt;image <span class="built_in">id</span> | image name&gt;<span class="comment"># 删除镜像</span></span><br></pre></td></tr></table></figure><h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>dockerfile 用来配置 docker 镜像，Docker 根据此文件生成 image 文件</p><figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">14</span><span class="comment"># 指定基础镜像，&#x27;:&#x27; 后的数字用来指定镜像版本。这里指定了版本为 14 的 node 镜像，常用的镜像有 nginx mysql php 等</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> &lt;author name&gt;<span class="comment"># 设置镜像作者</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /example<span class="comment"># 指定工作路径为 /example</span></span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . /example<span class="comment"># 将当前目录下的所有文件（不包含 .dockerignore 排除的路径），拷贝到 image 文件的 /example 目录</span></span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pnpm install<span class="comment"># 在工作目录下，运行 pnpm install 命令。RUN 命令在 image 构建阶段执行，执行结果都会打包进 image 文件。RUN 命令可以有多个</span></span></span><br><span class="line"><span class="keyword">ENV</span> VERSION <span class="number">14.0</span><span class="comment"># 用来设置环境变量，&lt;key&gt;=&lt;value&gt; &lt;key2&gt;=&lt;value2&gt; 或者 ENV &lt;key&gt; &lt;value&gt; 两种写法。$VERSION 使用变量</span></span><br><span class="line"><span class="keyword">ARG</span> NAME=HI <span class="comment"># 设置构建环境时的环境变量。该指令仅在 Dockerfile 内有效，如在 FROM 指令之前指定，就只能用于 FROM 指令中，想在 FROM 指令后使用需重新设置。AGR 指令会被构建命令 docker build --build-arg &lt;name&gt;=&lt;value&gt; 覆盖</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="language-bash"> /data <span class="comment"># 定义匿名卷</span></span></span><br><span class="line"><span class="keyword">USER</span> jay <span class="comment"># 切换到指定用户</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span><span class="comment">#容器对外暴露端口，允许外部连接暴露的端口</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;pnpm&quot;</span>, <span class="string">&quot;start&quot;</span>]<span class="comment"># 容器启动后自动执行 pnpm start 命令。CMD 命令只能有一个。如在 docker run 后附加命令，该命令会覆盖 CMD 命令</span></span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
             
         </tags>
       
@@ -83,9 +108,9 @@
           
           <category> Typescript </category>
           
-          <category> Vue3 </category>
-          
           <category> web3 </category>
+          
+          <category> Vue3 </category>
           
       </categories>
       
