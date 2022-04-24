@@ -610,7 +610,8 @@ subtitle:
   # subtitle 會先顯示 source , 再顯示 sub 的內容
   source: 3
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
-  sub: 不积跬步&#44;无以至千里 不积小流&#44;无以成江海
+  sub:
+    - 不积跬步&#44;无以至千里 不积小流&#44;无以成江海
 
 # Loading Animation (加載動畫)
 preloader: true
