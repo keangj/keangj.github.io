@@ -1,7 +1,6 @@
 ---
 title: TypeScript
 date: 2019-07-26 17:18:47
-updated: 2022-02-04 19:20:33
 tags: TypeScript
 categories: 
   - ['Typescript']
@@ -63,10 +62,9 @@ fn4.attr = ''
 ### 函数重载
 
 ``` ts
-type T = number | string
 function add(a: number, b:number): number
 function add(a: string, b:string): string
-function add(a: T, b: T): any {}
+function add(a: number | string, b: number | string): number | string {}	// 这里的类型需包含之前定义的类型，也可以是顶级类型 any unknown
 
 add(1, 2)
 add('hello', 'world')
@@ -218,6 +216,19 @@ add(1, 2)
 interface Arr {
   [index: number]: string;
 }
+
+// 多个同名 interface 会合并为一个
+interface Human {
+  name: string;
+}
+interface Human {
+  skin: string;
+}
+
+const person: Human = {
+  name: 'jay',
+  skin: 'yellow'
+}
 ```
 
 ### 只读属性
@@ -248,9 +259,57 @@ interface Human extends Animal {
   name: string;
 }
 
+type Plant = { color: string; }
+interface Grass extends Plant {
+  category: string;
+}
 ```
 
+### implements
 
+从 class 或 interface 实现所有的属性和方法，同时可以重写属性和方法
+
+``` ts
+interface Action {
+  run(): void;
+}
+interface Language {
+  say(): void;
+}
+
+class Car implements Action {
+  run () {}
+}
+// 一个类可以 implements 多个 interface 或 class
+class Human implements Action, Language {
+  run () {}
+  say () {}
+}
+```
+
+### implements 和 extends 的区别
+
+``` ts
+// implements 只能用于 class，不能用于 interface
+interface Action {
+  run(): void;
+}
+class Vehicle {}
+class Car implements Vehicle, Action {
+  run () {}
+}
+// interface 不能 implements interface 或 class
+interface Person implements Action {}	// error: Interface declaration cannot have 'implements' clause
+interface Person implements Vehicle {}	// error: Interface declaration cannot have 'implements' clause
+
+// interface 可以 extends interface 或 class
+interface Person2 extends Action {}
+interface Person2 extends Vehicle {}
+
+// class 只能 extends class
+class Person3 extends Action {}	// error: Cannot extend an interface 'Action'. Did you mean 'implements'
+class Person3 extends Vehicle {}
+```
 
 ### 传 interface 未定义的属性
 
@@ -278,6 +337,12 @@ interface Human extends Animal {
   }
   ```
 
+### interface 和 type 区别
+
+
+
+
+
 
 
 ## 高级类型
@@ -287,17 +352,17 @@ interface Human extends Animal {
 多个类型合并为一个类型
 
 ``` ts
-interface x {
+interface X {
   a: string;
   b: number;
 }
 
-interface y {
+type Y = {
   b: number;
   c: string;
 }
 
-const z: x & y = {
+const z: X & Y = {
   a: 'hi',
   b: 233,
   c: 'hello'
@@ -388,11 +453,11 @@ sayHi('jay')
 ### 索引类型
 
 ```ts
+interface CreateObjectOptions {
+  [K: string]: any;
+}
 function createObject (options: CreateObjectOptions) {
 
-}
-interface CreateObjectOptions {
-  [K: string]: any; // 对 key 和 value 进行类型判断
 }
 createObject({
   obj: {},
@@ -516,12 +581,30 @@ const dog: Dog = {
 ``` ts
 ```
 
+### infer
 
+``` ts
+
+```
 
 ### keyof
 
-``` ts 
+获取类型的所有 key
 
+``` ts 
+interface Person {
+  name: string;
+  age: number;
+  useTools: () => void;
+}
+type Keys = keyof Person;	// type keys = 'name' | 'age'
+type Values = keyof { [key: string]: Person };  // type Values = string | number
+
+const k: Keys = 'name';
+const k2: Keys = 'age';
+
+const v: Values = ''
+const v2: Values = 123
 ```
 
 ### extends
@@ -534,11 +617,11 @@ const dog: Dog = {
 包含某属性
 
 ``` ts
-interface Persion {
+interface Person {
     name: string;
     age: number;
 }
-const jay: Persion = {
+const jay: Person = {
     name: 'jay',
     age: 18
 }
@@ -548,18 +631,12 @@ console.log('color' in jay)	// false
 
 ### typeof 
 
-``` ts
-function fn (value: number | string) {
-  value.toUpperCase() // error
-  value.toFixed() // error
-	if (typeof value === 'number') {
-    value.toFixed()
-  }
-  if (typeof value === 'string') {
-    value.toUpperCase()
-  }
-}
+可以用来获取变量的类型
 
+``` ts
+const person = { name: 'jay', age: 18 };
+
+type Person = typeof person;	// type Person = { name: string, age: number }
 ```
 
 
