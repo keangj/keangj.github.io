@@ -175,8 +175,6 @@ console.log(s)
 console.log(str)	// error
 ```
 
-
-
 ## 接口
 
 接口用来描述一个对象拥有哪些属性
@@ -475,6 +473,34 @@ function pluck<T, K extends keyof T>(object: T, keys: Array<K>): T[k][] {
 pluck({ name: 'jay', age: 18}, ['name', 'age'])
 ```
 
+### ReturnType<T>
+
+返回 T 的返回值类型，T 为 (...args: any) => any
+
+``` ts
+type Result = ReturnType<() => number>	// type Result = number
+
+function fn (str: string) {
+  return str.toString()
+}
+type Result2 = ReturnType<typeof fn>	// type Result2 = string
+```
+
+### Record<K, T>
+
+定义对象的 key value 类型
+
+``` ts
+const example: Record<string, number> = { jay: 1 };
+const example2: Record<number, string> = { 0: '' };
+type productType = 'food' | 'commodity' | 'clothe';
+const example3: Record<productType, productType> = { 
+  food: 'food',
+  commodity: 'commodity',
+  clothe: 'clothe'
+};
+```
+
 ### Readonly<T>
 
 返回 T 并将所有属性的类型变为只读
@@ -511,7 +537,11 @@ arr.push(6)	// error
 返回 T 并将类型所有变为 required
 
 ``` ts
-
+interface Person {
+  name: string;
+  age?: number;
+}
+type Result = Required<Person>;	// type Result = { name: string; age: number; }
 ```
 
 ### Partial<T>
@@ -558,27 +588,35 @@ const dog: Dog = {
 返回 T 中对应的 K 属性
 
 ``` ts
-
+interface Person {
+  name: string;
+  age: number;
+}
+type Result = Pick<Person, 'name'>	// type Result = { name: string; }
 ```
 
 ### Exclude<T, U>
 
+返回 T 中不包含 U 的
+
 ``` ts
+type Result = Exclude<'a' | 'b' | 'c', 'c'>	// type Result = "a" | "b"
 ```
 
 ### Extract<T, U>
 
+返回 T 和 U 的交集
+
 ``` ts
+type Result = Extract<'a' | 'b' | 'c', 'c'>	// type Result = "c"
 ```
 
-### NonNullavle<T>
+### NonNullable<T>
+
+返回 T 并去除 undefined
 
 ``` ts
-```
-
-### ReturnType<T>
-
-``` ts
+type Result = NonNullable<string | number | boolean | undefined>	// type Result = string | number | boolean
 ```
 
 ### infer
@@ -602,7 +640,6 @@ type Values = keyof { [key: string]: Person };  // type Values = string | number
 
 const k: Keys = 'name';
 const k2: Keys = 'age';
-
 const v: Values = ''
 const v2: Values = 123
 ```
@@ -610,6 +647,8 @@ const v2: Values = 123
 ### extends
 
 ``` ts
+type Gender = 'male' | 'female';
+type Person = 
 ```
 
 ### in
@@ -679,5 +718,21 @@ function fn (params: Props) {
 ``` ts
 type Add<T> = (a: T, b: T) => T
 const add: Add<number> = (a, b) => a + b	// 在使用时才确定泛型的类型
+```
+
+### as const
+
+``` ts
+// const animal = ['dog', 'cat', 'pig', 'bird'] 是一个变量数组， const animal: string[]，此时还可以修改数组。
+// 当加了 as const 后就变成一个只读常量数组（元组），此时 animal 不能修改
+const animal = ['dog', 'cat', 'pig', 'bird'] as const;	// const animal: readonly ["dog", "cat", "pig", "bird"]
+type AnimalType = typeof animal[number];	// type AnimalType = "dog" | "cat" | "pig" | "bird"
+
+// 没有 as const
+const productType = ['food', 'commodity', 'clothe'];
+console.log(productType.includes(''))	// 此处不会有提示和报错
+// 添加 as const
+const productType = ['food', 'commodity', 'clothe'] as const;
+console.log(productType.includes(''))	// error: Argument of type '""' is not assignable to parameter of type '"food" | "commodity" | "clothe"'
 ```
 
