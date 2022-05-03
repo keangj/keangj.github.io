@@ -25,7 +25,7 @@ git commit -a -m '' # git add . git commit -m ''
 git commit . --amend # 将当前 commit 合并到上次 commit
 git refolg # 查看引用版本号
 git log	# 查看日志
-git status -sb
+git status -sb	# 显示所有的状态和总结
 git rebase -i HEAD~3 # 合并最近三次 commit
 git rm --cached <file>	# 将 file 从 git 仓库删除
 
