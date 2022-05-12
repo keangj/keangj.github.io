@@ -26,7 +26,7 @@ pnpm dev
 ## 安装相关依赖
 
 ``` sh
-pnpm add web3 web3modal @walletconnect/web3-provider rollup-plugin-polyfill-node
+pnpm add web3 web3modal @walletconnect/web3-provider
 ```
 
 
@@ -219,6 +219,127 @@ const getBalance = async () => {
   <p>{{ account }}</p>
   <p>{{ amount }}</p>
 </template>
+```
+
+
+
+## vite 中出现的问题
+
+Web3Modal 需要 node 环境的依赖（process、buffer、events 等）
+
+使用 vite 报 Buffer process EventEmitter global 不存在的错误
+
+解决方案一
+
+``` sh
+# 安装以下依赖
+pnpm add -D rollup-plugin-polyfill-node
+```
+
+修改 vite.config.ts
+
+``` ts
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+export default defineConfig({
+  // ...
+  plugins: [
+    {
+      ...nodePolyfills ({ include: ['node_modules/**/*.js', /node_modules\/.vite\/.*js/] }),
+      apply: 'serve'
+    },
+  ],
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+  // ...
+})
+```
+
+
+
+解决方案二
+
+``` sh
+# 安装以下依赖
+pnpm add buffer buffer process util
+```
+
+在 *index.html* 中添加以下代码
+
+``` html
+<head>
+  <script>
+    window.global = window;
+  </script>
+  <script type="module">
+    import process from "process";
+    import { Buffer } from "buffer";
+    import EventEmitter from "events";
+
+    window.Buffer = Buffer;
+    window.process = process;
+    window.EventEmitter = EventEmitter;
+  </script>  
+</head>
+```
+
+在 *vite.config.ts* 中添加以下代码
+
+``` ts
+// 解决 build 后报错
+export default defineConfig({
+  // ...
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+  // ...
+})
+
+```
+
+解决方案三
+
+使用方案一时如遇到使用 ui 库 vite 加载资源错误问题使用一下配置
+
+``` ts
+# 安装以下依赖
+pnpm add -D rollup-plugin-polyfill-node @esbuild-plugins/node-globals-polyfill @esbuild-plugins/node-modules-polyfill
+```
+
+vite.config.ts
+
+``` ts
+export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis',
+      },
+      // Enable esbuild polyfill plugins
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          process: true,
+          buffer: true,
+        }),
+        NodeModulesPolyfillPlugin(),
+      ],
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()],
+    },
+  },
+})
 ```
 
 

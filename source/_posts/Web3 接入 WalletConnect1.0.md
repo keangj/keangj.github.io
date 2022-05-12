@@ -19,7 +19,7 @@ cover: https://github.com/ChainSafe/web3.js/blob/1.x/assets/logo/web3js.jpg?raw=
 ## 安装依赖
 
 ``` sh
-yarn add web3 @walletconnect/web3-provider
+pnpm add web3 @walletconnect/web3-provider
 ```
 
 ## 创建 *walletConnetct provider*
@@ -100,7 +100,7 @@ const killSession = () => {
 
    ``` sh
    # 安装以下依赖
-   yarn add -D rollup-plugin-polyfill-node
+   pnpm add -D rollup-plugin-polyfill-node
    ```
 
    修改 vite.config.ts
@@ -134,7 +134,7 @@ const killSession = () => {
 
    ``` sh
    # 安装以下依赖
-   yarn add buffer buffer process util
+   pnpm add buffer buffer process util
    ```
 
    在 *index.html* 中添加以下代码

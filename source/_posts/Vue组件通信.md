@@ -2,7 +2,7 @@
 title: Vue组件通信
 date: 2019-03-01 21:50:12
 updated: 2021-08-20
-tags:	Vue
+tags: Vue
 categories: 
   - ['Vue']
 cover:  https://www.vectorlogo.zone/logos/vuejs/vuejs-ar21.png

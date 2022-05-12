@@ -39,6 +39,94 @@ const arr2: Array<number | string> = [1, '']	// 泛型
 ### 枚举
 
 ``` ts
+// 枚举成员的初始值会从 0 开始自增
+enum Position {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
+}
+console.log(Position.UP)		// 0
+console.log(Position.DOWN)	// 1
+console.log(Position.LEFT)	// 2
+console.log(Position.RIGHT)	// 3
+console.log(Position[0])	// 'UP'
+console.log(Position[1])	// 'DOWN'
+console.log(Position[2])	// 'LEFT'
+console.log(Position[3])	// 'RIGHT'
+```
+
+也可以为枚举赋值
+
+``` ts
+// 字符串枚举
+enum Position {
+  UP = 'up',
+  DOWN = 'down',
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+console.log(Position.UP)		// 'up'
+console.log(Position.DOWN)	// 'down'
+console.log(Position.LEFT)	// 'left'
+console.log(Position.RIGHT)	// 'right'
+// 数字枚举
+enum Num {
+  ZERO = 0,
+  ONE = 1,
+  TWO = 2,
+  THREE = 3,
+}
+console.log(Num.ZERO)		// 0
+console.log(Num.ONE)		// 1
+console.log(Num.TWO)		// 2
+console.log(Num.THREE)	// 3
+```
+
+如果从中间开始赋值为字符串需要重新为之后的成员赋初始值
+
+``` ts
+enum Position {
+  UP,
+  DOWN = 'down',
+  LEFT = 6,	// 必须指定初始值
+  RIGHT
+}
+console.log(Position.UP)		// 0
+console.log(Position.DOWN)	// 'down'
+console.log(Position.LEFT)	// 6
+console.log(Position.RIGHT)	// 7
+```
+
+计算成员
+
+``` ts
+enum Position {
+  UP,
+  DOWN = 'down'.length,	// 计算成员
+  LEFT = 6,
+  RIGHT
+}
+console.log(Position.UP)		// 0.xxx
+console.log(Position.DOWN)	// 4
+console.log(Position.LEFT)	// 6
+console.log(Position.RIGHT)	// 7
+```
+
+常量枚举
+
+``` ts
+const enum Position {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
+}
+// 常量枚举不能有计算成员
+const enum Example {
+  UP,
+  DOWN = 'down'.length,	// error
+}
 ```
 
 
@@ -263,6 +351,16 @@ interface Grass extends Plant {
 }
 ```
 
+### 循环引用自身
+
+``` ts
+interface Example {
+  [key: string]: string | Example;
+}
+```
+
+
+
 ### implements
 
 从 class 或 interface 实现所有的属性和方法，同时可以重写属性和方法
@@ -337,9 +435,10 @@ class Person3 extends Vehicle {}
 
 ### interface 和 type 区别
 
-
-
-
+1. interface 使用 **extends** 继承，type 使用 **&** 联合类型继承
+2. interface 可以通过重复声明来拓展，type 同名只能声明一次
+3. interface 会创建新的类型，type 只是类型别名
+4. Interface 可以循环引用自身，type 不可以
 
 
 
@@ -472,6 +571,62 @@ function pluck<T, K extends keyof T>(object: T, keys: Array<K>): T[k][] {
 }
 pluck({ name: 'jay', age: 18}, ['name', 'age'])
 ```
+
+### 可识别类型
+
+1.有一个共有的字段
+2.共有字段是可穷举的
+
+```ts
+type Props = {
+  status: false;
+  name: string;
+  age: number;
+} | {
+  status: true;
+  name: string;
+}
+
+const example: Props = {
+  status: false,
+  name: 'jay',
+  age: 18
+}
+const example2: Props = {
+  status: true,
+  name: 'jay'
+}
+function fn (params: Props) {
+  if (params.status === true) {
+    console.log(params.name);
+  } else {
+    console.log(params.age);
+  }
+}
+```
+
+## 条件类型
+
+``` ts
+// T extends U ? A : B，和三元表达式类似
+type IsString<T> = T extends string ? true : false;
+type T1 = IsString<number>	// type T1 = false
+type T2 = IsString<string>	// type T1 = true
+type T3 = IsString<'string'> // type T1 = true
+type T4 = IsString<any> // type T1 = boolean，因同时返回 true false 结果为 boolean
+type T5 = IsString<never> // type T1 = never
+```
+
+### 泛型
+
+``` ts
+type Add<T> = (a: T, b: T) => T
+const add: Add<number> = (a, b) => a + b	// 在使用时才确定泛型的类型
+```
+
+
+
+## 工具类型
 
 ### ReturnType<T>
 
@@ -619,9 +774,18 @@ type Result = Extract<'a' | 'b' | 'c', 'c'>	// type Result = "c"
 type Result = NonNullable<string | number | boolean | undefined>	// type Result = string | number | boolean
 ```
 
+
+
 ### infer
 
 ``` ts
+// infer 只能在条件类型(T extends X ? Y : Z)的 extends 子句中才能使用
+// infer 声明的变量只能在条件类型的 true 分支中使用
+
+type Example<T> = T extends (infer U)[] ? U : T;	// U 用于存放推断的类型
+// Example 传入 string[]，T 为 string[]
+// T extends (infer U)[] 等于	string[] extends (infer U)[]，类型匹配 string 匹配 (infer U)，[] 匹配 []，因此 U 为 string。
+type T = Example<string[]>	// type T = string
 
 ```
 
@@ -640,15 +804,34 @@ type Values = keyof { [key: string]: Person };  // type Values = string | number
 
 const k: Keys = 'name';
 const k2: Keys = 'age';
-const v: Values = ''
-const v2: Values = 123
+const v: Values = '';
+const v2: Values = 123;
 ```
 
 ### extends
 
+泛型约束
+
 ``` ts
 type Gender = 'male' | 'female';
-type Person = 
+type Person<T extends Gender> = T;
+// Person 的泛型必须为 Gender
+const example: Person<'male'> = 'male';
+// ExampleType 的 T 如果存在于 Gender 就返回 T，否则返回 nerver
+type ExampleType<T> = T extends Gender ? T : never
+type ExampleType2 = ExampleType<'male'>	// type ExampleType2 = "male"
+type ExampleType3 = ExampleType<null>	// type ExampleType2 = nerver
+type ExampleType4 = ExampleType<boolean>	// type ExampleType2 = nerver
+type ExampleType5 = ExampleType<'female' | 'male' | boolean | null>	// type ExampleType2 = "male" | 'female'
+
+interface HasLength {
+  length: number
+}
+// arg 必须包含 length
+function example2<T extends HasLength> (arg: T): T {
+  console.log(arg.length)
+  return arg
+}
 ```
 
 ### in
@@ -680,46 +863,6 @@ type Person = typeof person;	// type Person = { name: string, age: number }
 
 
 
-### 可识别类型
-
-1.有一个共有的字段
-2.共有字段是可穷举的
-
-```ts
-type Props = {
-  status: false;
-  name: string;
-  age: number;
-} | {
-  status: true;
-  name: string;
-}
-
-const example: Props = {
-  status: false,
-  name: 'jay',
-  age: 18
-}
-const example2: Props = {
-  status: true,
-  name: 'jay'
-}
-function fn (params: Props) {
-  if (params.status === true) {
-    console.log(params.name);
-  } else {
-    console.log(params.age);
-  }
-}
-```
-
-### 泛型
-
-``` ts
-type Add<T> = (a: T, b: T) => T
-const add: Add<number> = (a, b) => a + b	// 在使用时才确定泛型的类型
-```
-
 ### as const
 
 ``` ts
@@ -735,4 +878,20 @@ console.log(productType.includes(''))	// 此处不会有提示和报错
 const productType = ['food', 'commodity', 'clothe'] as const;
 console.log(productType.includes(''))	// error: Argument of type '""' is not assignable to parameter of type '"food" | "commodity" | "clothe"'
 ```
+
+
+
+## 其他
+
+### 在 window 上添加变量声明
+
+``` ts
+declare global {
+  interface Window {
+    example: srting;
+  }
+}
+```
+
+
 

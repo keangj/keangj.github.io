@@ -5,7 +5,7 @@ updated: 2022-03-15 19:04:48
 tags: Nginx
 categories: 
   - ['Nginx']
-cover: https://knight-li.com/storage/images/blog/B-09202111/B-09202111_L.jpg
+cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAff1msXvuacYlIJ-bUL4Uece-YW30unNERQ&usqp=CAU
 
 ---
 
