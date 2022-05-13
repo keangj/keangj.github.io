@@ -337,6 +337,9 @@ export default defineConfig({
     rollupOptions: {
       plugins: [nodePolyfills()],
     },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
   },
 })
 ```
