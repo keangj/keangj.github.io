@@ -2,6 +2,7 @@
 title: Vue3 Vite Web3Modal 搭建 Web3 项目
 tags: [Vite, Vue3, Typescript, web3]
 date: 2022-04-01 22:30:32
+updated: 2022-04-22 20:00:00
 categories: 
   - ['Vite']
   - ['Vue3']

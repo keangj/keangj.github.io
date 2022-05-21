@@ -5,6 +5,7 @@ tags: TypeScript
 categories: 
   - ['Typescript']
 cover: https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/09/typescript.png
+sticky: 10
 ---
 
 # TypeScript
@@ -652,13 +653,15 @@ type T1 = IsString<number>	// type T1 = false
 type T2 = IsString<string>	// type T1 = true
 type T3 = IsString<'string'> // type T1 = true
 type T4 = IsString<any> // type T1 = boolean，因同时返回 true false 结果为 boolean
-type T5 = IsString<never> // type T1 = never
+type T5 = IsString<never> // type T1 = never，never被认为是空的联合类型
+// never是所有类型的子类型
+type A1 = never extends 'x' ? string : number; // string
 ```
 
-分布式条件类型，在条件类型中如被检查的类型（T）为裸类型（没有被数组、元组、Promise 包装过的类型，如：T[] [T] 等）被称为分布式条件类型
+分布式条件类型，在使用了 extends 关键字的条件类型中如被检查的类型（T）为裸类型（没有被数组、元组、Promise 包装过的类型，如：T[] [T] 等）被称为分布式条件类型
 
 ``` ts
-// 当被检查类型为联合类型，在运算过程中会被分解为多个分支
+// 在泛型类型中当被检查类型为联合类型，在运算过程中会被分解为多个分支
 // X ｜ Y extends U ? A : B
 // (X extends U ? A : B) | (Y extends U ? A : B)
 type Example<T> = T extends string ? 'yes' : 'no';
@@ -912,6 +915,13 @@ interface B { a: string; b: string }
 type T1 = Example<A, B>;	// false
 type T2 = Example<A, A>;	// true
 type T3 = Example<B, A>;	// true
+
+// 被检查的类型不为泛型，仅条件判断
+type T4 = 'a' extends 'a' ? 'yes' : 'no'; // 'yes'
+type T5 = 'a' | 'b' extends 'a' ? 'yes' : 'no'; // 'no'
+// 被检查的类型为泛型，为分布式条件类型
+type Example2<T> = T extends 'a' ? 'yes' : 'no';
+type T6 = Example2<'a' | 'b'> // type T6 = 'yes' | 'no'
 ```
 
 ### in

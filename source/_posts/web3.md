@@ -2,6 +2,7 @@
 title: web3.js
 tags: [Typescript, web3]
 date: 2022-03-28
+updated: 2022-04-26 20:00:00
 categories: 
   - ['Typescript']
   - ['web3']
