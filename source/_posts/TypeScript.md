@@ -486,6 +486,19 @@ const z: X & Y = {
 }
 ```
 
+也可以是函数
+
+``` ts
+type F1 = (a: string, b: string) => void;
+type F2 = (a: number, b: number) => void;
+type F3 = (a: string, b: number) => void;
+
+const example: F1 & F2 & F3 = (a: string | number, b: string | number) => {};
+example(1, 1);
+example('1', '1');
+example('1', 1)
+```
+
 
 
 ### 联合类型
@@ -547,9 +560,34 @@ function sayHi (this: number | void, name: string) {
 sayHi('jay')
 ```
 
+### 映射类型
+
+```` ts
+{ [P in K]: T }	// in 关键字用于遍历 K 类型中的所有类型
+{ [P in K]?: T }	// ? 表示增加可选修饰符
+{ [P in K]-?: T }	// -? 表示移除可选修饰符
+{ readonly [P in K]: T }	// readonly 表示增加只读修饰符
+{ -readonly [P in K]?: T }	// - readonly 表示移除只读修饰符
+
+type T1 = { [P in 'a' | 'b']: string };	// type T1 = { a: string; b: string; }
+type T2 = { [P in 'a' | 'b']: P };	// type T1 = { a: 'a'; b: 'b'; }
+ 
+ // as, 使用 as 可以对映射类型中的键进行重新映射，NewKeyType 必须是 string | number | symbol （联合类型）的子类
+// { [K in keyof T as NewKeyType]: T[K] }
+type Person = {
+    name: string;
+    age: number;
+}
+ // type T3 = { jayname: string; jayage: string; }	// { string & K } 用来过滤 K 中非 string 类型的键
+type T3 = { [K in keyof Person as `jay${string & K}` ]: string };	
+````
+
 ### 索引类型
 
 ```ts
+// 索引类型的 key 只能是 number string symble 和模版字面量类型
+{ [key: keyType]: valueType }
+
 interface CreateObjectOptions {
   [K: string]: any;
 }
@@ -605,7 +643,7 @@ function fn (params: Props) {
 }
 ```
 
-## 条件类型
+### 条件类型
 
 ``` ts
 // T extends U ? A : B，和三元表达式类似
@@ -616,6 +654,22 @@ type T3 = IsString<'string'> // type T1 = true
 type T4 = IsString<any> // type T1 = boolean，因同时返回 true false 结果为 boolean
 type T5 = IsString<never> // type T1 = never
 ```
+
+分布式条件类型，在条件类型中如被检查的类型（T）为裸类型（没有被数组、元组、Promise 包装过的类型，如：T[] [T] 等）被称为分布式条件类型
+
+``` ts
+// 当被检查类型为联合类型，在运算过程中会被分解为多个分支
+// X ｜ Y extends U ? A : B
+// (X extends U ? A : B) | (Y extends U ? A : B)
+type Example<T> = T extends string ? 'yes' : 'no';
+type T1 = Example<number | string>; // type T1 = 'yes' | 'no'
+
+// 被检查的类型 T 被 [] 包装过就不属于分布式条件类型
+type Example2<T> = T[] extends number[] ? 'yes' : 'no';
+type T2 = Example2<number | string>;  // type T2 = 'no'
+```
+
+
 
 ### 泛型
 
@@ -736,6 +790,17 @@ type Dog = Omit<Person, 'useTools' | 'name'>
 const dog: Dog = {
   age: 6
 }
+
+// 修改接口属性类型
+interface Person {
+  name: string;
+  age: number;
+  skin: string;
+}
+interface Example extends Omit<Person, 'age'> {
+  age: string
+}
+const jay: Example = { name: 'jay', age: '18', skin: 'yellow'}
 ```
 
 ### Pick<T, K>
@@ -806,6 +871,12 @@ const k: Keys = 'name';
 const k2: Keys = 'age';
 const v: Values = '';
 const v2: Values = 123;
+
+enum Gender {
+  Male,
+  Female
+}
+type G = keyof typeof Gender;	// type G = "Male" | "Female"
 ```
 
 ### extends
@@ -814,7 +885,7 @@ const v2: Values = 123;
 
 ``` ts
 type Gender = 'male' | 'female';
-type Person<T extends Gender> = T;
+type Person<T extends Gender> = T;	// 约束 T 的类型必须为 Gender 的子类型
 // Person 的泛型必须为 Gender
 const example: Person<'male'> = 'male';
 // ExampleType 的 T 如果存在于 Gender 就返回 T，否则返回 nerver
@@ -832,23 +903,23 @@ function example2<T extends HasLength> (arg: T): T {
   console.log(arg.length)
   return arg
 }
+
+// 包含关系，T 包含 U 为 true
+type Example<T, U> = T extends U ? true : false;
+
+interface A { a: string; }
+interface B { a: string; b: string }
+type T1 = Example<A, B>;	// false
+type T2 = Example<A, A>;	// true
+type T3 = Example<B, A>;	// true
 ```
 
 ### in
 
-包含某属性
+遍历类型
 
 ``` ts
-interface Person {
-    name: string;
-    age: number;
-}
-const jay: Person = {
-    name: 'jay',
-    age: 18
-}
-console.log('age' in jay)	// true
-console.log('color' in jay)	// false
+type T1 = { [P in 'a' | 'b' ｜ 'c']: string }	// type T1 = { a: string; b: string; c: string; }
 ```
 
 ### typeof 
