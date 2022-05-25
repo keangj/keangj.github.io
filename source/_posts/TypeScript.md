@@ -108,7 +108,7 @@ enum Position {
   LEFT = 6,
   RIGHT
 }
-console.log(Position.UP)		// 0.xxx
+console.log(Position.UP)		// 0
 console.log(Position.DOWN)	// 4
 console.log(Position.LEFT)	// 6
 console.log(Position.RIGHT)	// 7
@@ -676,9 +676,11 @@ type T2 = Example2<number | string>;  // type T2 = 'no'
 
 ### 泛型
 
+把类型当作参数使用
+
 ``` ts
 type Add<T> = (a: T, b: T) => T
-const add: Add<number> = (a, b) => a + b	// 在使用时才确定泛型的类型
+const add: Add<number> = (a, b) => a + b	// 在使用时根据传入类型来确定泛型的类型
 ```
 
 
@@ -971,6 +973,16 @@ declare global {
   interface Window {
     example: srting;
   }
+}
+```
+
+### 类型声明
+
+``` ts
+
+// 声明模块
+declare module "vue3" {
+  
 }
 ```
 

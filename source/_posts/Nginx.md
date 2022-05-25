@@ -11,12 +11,6 @@ cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAff1msXvuacYlIJ-bU
 
 # Nginx
 
-## 基本
-
-正向代理 代理客户端
-
-反向代理 代理服务端
-
 ### Nginx 命令
 
 ``` sh
@@ -215,8 +209,6 @@ $document_uri ：与$uri相同
 
 ## Nginx 常用功能
 
-
-
 ### 反向代理
 
 ``` nginx
@@ -263,12 +255,35 @@ location / {	# 规则自上而下匹配
 
 ### 跨域
 
+反向代理
+
 ``` nginx
+server {
+  listen 3000;
+  server_name www.example.com;
+  
+  location ^~/api {	# /api/ 代理到 api.example.com/api
+    proxy_pass api.example.com;
+  }
+}
 ```
 
+设置请求头
 
+``` nginx
+location / {
+  add_header Access-Control-Allow-Origin http://example.com always;	# 设置请求源。* 允许所有请求，带 cookie 的请求不支持 *
+  add_header Access-Control-Allow-Methods "GET, POST, PUT, OPTIONS";	# 允许的方法
+  add_header Access-Control-Allow-Headers "Accept,Accept-Encoding,Accept-Language,Connection,Content-Length,Content-Type,Host,Origin,Referer,User-Agent";	# 允许请求的 header
+  add_header Access-Control-Allow-Credentials true;    # 带 cookie，Access-Control-Allow-Credentials 为 true Access-Control-Allow-Origin 和 Access-Control-Allow-Headers 不能为 *
 
-### 合并请求
+  # 非简单请求的预检请求 OPTIONS 请求返回 204
+  if ($request_method = 'OPTIONS') {
+    add_header 'Access-Control-Max-Age' 86400;   # OPTIONS 请求的有效期，在有效期内不用发出另一条预检请求
+    return 204;
+  }
+}
+```
 
 
 
@@ -342,13 +357,6 @@ server {
   }
 }
 ```
-
-### 动静分离
-
-``` nginx
-```
-
-
 
 
 
