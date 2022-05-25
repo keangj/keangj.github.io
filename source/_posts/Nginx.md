@@ -209,6 +209,21 @@ $document_uri ：与$uri相同
 
 ## Nginx 常用功能
 
+### gzip
+
+``` nginx
+gzip on;	# on 开启 gzip
+gzip_types text/plain application/json;	# 要使用 gzip 压缩的文件类型，text/html 会强制启用
+gzip_proxied any;	# 默认 off，nginx做为反向代理时启用，用于设置启用或禁用从代理服务器上收到相应内容 gzip 压缩
+gzip_vary on;	# 在响应头中添加 Vary: Accept-Encoding，代理服务器可根据请求头中的 Accept-Encoding 识别是否启用 gzip 压缩
+gzip_comp_level 6;	# gzip 压缩比。该属性最大为 9，最小为 1，级别越高压缩率越大，压缩时间越长。
+gzip_buffers 16 8k;	# 获取多少内存用于缓存压缩结果，16 8k 表示以 8k*16 为单位
+gzip_min_length 1k;	# 允许压缩的页面最小字节数，页面字节数从header头中的 Content-Length 中进行获取。默认值是 0，不管页面多大都压缩。建议设置成大于 1k 的字节数，小于 1k 可能会越压越大
+gzip_http_version: 1.1;	# 启用 gzip 所需的 HTTP 最低版本，默认 1.1
+```
+
+
+
 ### 反向代理
 
 ``` nginx

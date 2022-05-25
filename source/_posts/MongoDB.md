@@ -13,17 +13,16 @@ cover: https://1000logos.net/wp-content/uploads/2020/08/MongoDB-Logo.png
 ## 操作数据库
 
 - 创建、切换  
+    
     `use 数据库名`  
     切换数据库，如不存在就创建一个新的数据库。
-
-    <!-- ```sh
-      use test
     
-    ``` -->
+    ```use test```
     
 - 删除  
     `db.dropDatabase()`  
     删除数据库
+    
 - 查看  
     `show dbs`
     查看当前的数据库
