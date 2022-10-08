@@ -46,6 +46,7 @@ git branch	# 查看分支
 git branch <banch name>	# 创建分支
 git branch -d <branch name>	# 删除分支
 git checkout <branch name>	# 切换分支
+git switch <branch name>	# 切换分支
 git checkout -b <branch name>	# 创建并切换分支
 git merge <branch name>	# 合并 <branch name> 到当前分支
 ```
@@ -59,3 +60,6 @@ git remote set-url origin git@github.com:example.git	# 重新设置远程仓库
 
 
 
+## Rebase
+
+Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。

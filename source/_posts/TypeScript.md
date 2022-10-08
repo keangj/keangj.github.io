@@ -1,5 +1,5 @@
 ---
-title: TypeScript
+htitle: TypeScript
 date: 2019-07-26 17:18:47
 updated: 2022-05-21
 tags: TypeScript
@@ -35,7 +35,7 @@ const a: T = new T()
 
 ``` ts
 const arr: number[] = [1, 2, 3]
-const arr2: Array<number | string> = [1, '']	// 泛型
+const arr2: Array<number | string> = [1, '']	// 泛型写法
 ```
 
 ### 枚举
@@ -139,14 +139,20 @@ const enum Example {
 // 函数
 const fn: (a: number, b: number) => number = (a, b) => a + b
 const fn2 = (a: number, b: number) => a + b
+// 类型别名
 type Fn = (a: number, b: number) => number
 const fn3:Fn = (a, b) => a + b
+// interface
 interface Fn2 {
   (a: number, b: number): number,
   attr: string
 }
 const fn4 =  (a: number, b: number) => number
 fn4.attr = ''
+
+// 没有返回值
+type FnReturnVoid = () => void
+const fn5: FnReturnVoid = () => {}
 ```
 
 ### 函数重载
@@ -175,6 +181,8 @@ value = []
 ```
 
 ### Unknown
+
+`unknown` 可以认为是其他类型的联合类型
 
 和 `any` 一样是顶级类型，所有的值都可以赋给 `unknown`。
 
@@ -207,7 +215,7 @@ a.name	// 类型“unknown”上不存在属性“name”。ts(2339)
 
 ### never
 
-never 和 any unknown 相反为底部类型（bottom type），不存在的值
+never 和 any unknown 相反为底部类型（bottom type），不存在类型
 
 ``` ts
 // never, 不能将任何值赋给 never
@@ -216,6 +224,15 @@ let a: never = ''	// error
 let a: never = []	// error
 let a: never = {}	// error
 type T = number & string	// 没有任何值属于 number 和 string 类型，所以 type T = never
+const fn = (a: number | string) => {
+  if (typeof a === 'number') {
+    // 类型为 number
+  } else if (typeof a === 'string') {
+    // 类型为 string
+  } else {
+    // 类型为 never。对 a 进行类型收窄后，当前不存在任何类型
+  }
+}
 ```
 
 ### void
@@ -229,7 +246,7 @@ function fn (): void {}
 
 ### 元组
 
-固定长度数组
+固定长度和类型数组
 
 ``` ts
 let arr: [number, string, boolean] = [1, '', true]
@@ -439,10 +456,12 @@ class Person3 extends Vehicle {}
 
 1. interface 使用 **extends** 继承，type 使用 **&** 联合类型继承
 2. interface 可以通过重复声明来拓展，type 同名只能声明一次
-3. interface 会创建新的类型，type 只是类型别名
-4. Interface 可以循环引用自身，type 不可以
 
+Interface 只描述对象，type 则描述所有数据
 
+interface 是类型声明，type 只是为类型起一个别名
+
+interface 可自动合并，type 不可重新赋值
 
 ## 高级类型
 
@@ -503,9 +522,7 @@ example('1', 1)
 
 
 
-### 联合类型
-
-值可以是定义的某一种类型
+### 联合类型（并集）
 
 ``` ts
 interface x {
@@ -534,6 +551,7 @@ const z2: x | y = {
 ```ts
 type str = string;
 const name:str = 'jay';
+type Fn = () = void
 ```
 
 ### 字面量类型
@@ -590,12 +608,16 @@ type T3 = { [K in keyof Person as `jay${string & K}` ]: string };
 // 索引类型的 key 只能是 number string symble 和模版字面量类型
 { [key: keyType]: valueType }
 
-interface CreateObjectOptions {
-  [K: string]: any;
+interface Indexable {
+  [k: string]: any;	// k 可以为任意字符
 }
-function createObject (options: CreateObjectOptions) {
+function createObject (options: Indexable) {
 
 }
+const example: Indexable = {
+  name: 'jay',
+  123: 456	// 数字最终会变成字符串，'123': 456
+} 
 createObject({
   obj: {},
   name: 'jay',
@@ -937,7 +959,7 @@ type T1 = { [P in 'a' | 'b' ｜ 'c']: string }	// type T1 = { a: string; b: stri
 
 ### typeof 
 
-可以用来获取变量的类型
+在 TS 中可以用来获取变量的类型
 
 ``` ts
 const person = { name: 'jay', age: 18 };
@@ -965,6 +987,91 @@ console.log(productType.includes(''))	// error: Argument of type '""' is not ass
 
 
 
+## 类型收窄
+
+### typeof
+
+只支持 `string number bigint boolean symbol undefined object function`；无法区分数组、日期、普通对象、null，这些类型都返回 `object`
+
+``` ts
+const a = ''
+typeof a	// string
+const b = 0
+typeof b	// number
+const c = null
+typeof c  // object
+```
+
+### instanceof
+
+不支持 `string number` 等简单类型
+
+``` ts
+const a = ''
+a instanceof Date	 // error
+const b = new Date()
+b instanceof Date	 // true
+```
+
+不支持 TS 独有的类型
+
+``` ts
+type Person = { name: string }
+const a = { name: 'jay' }
+a instanceof Person	// error
+```
+
+### in
+
+只适用于部分对象
+
+``` ts
+const a = { name: 'jay' }
+console.log('name' in a)	// true
+console.log('age' in a)	// false
+```
+
+### is 类型谓词
+
+支持所有类型
+
+``` ts
+type Rect = { height: number, width: number }
+type Circle = { radius: number,center: [number, number] }
+function isRect (type: Rect | Circle): type is Rect {
+  return 'height' in type && 'width' in type
+} 
+const fn = (a: Rect | Circle) => {
+  console.log(a)	// a: Rect | Circle
+  if (isRect(a)) {
+    console.log(a)	// a: Rect
+  }
+}
+```
+
+### 可辨别联合
+
+为类型添加同名、可辨别的简单类型的 key
+
+``` ts
+type Rect = { kind: 'rect', height: number, width: number }
+type Circle = { kind: 'circle', radius: number,center: [number, number] }
+type Shape = Rect | Circle
+
+const fn = (a: string | Shape) => {
+    console.log(a)	// a: string | Shape
+    if (typeof a === 'string') {
+        console.log(a)	// a: string
+    } else if (a.kind === 'rect') {
+        console.log(a)	// a: Rect
+    } else {
+        console.log(a)	// a: Circle
+    }
+}
+```
+
+
+
 ## 其他
 
 ### 在 window 上添加变量声明
@@ -976,6 +1083,19 @@ declare global {
   }
 }
 ```
+
+### 扩展 axios
+
+``` ts
+import { AxiosRequestConfig } from 'axios'
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    a: boolean
+  }
+}
+```
+
+
 
 ### 类型声明
 
