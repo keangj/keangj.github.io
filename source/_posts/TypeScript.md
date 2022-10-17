@@ -135,37 +135,63 @@ const enum Example {
 
 ### 函数
 
-``` ts
-// 函数
-const fn: (a: number, b: number) => number = (a, b) => a + b
-const fn2 = (a: number, b: number) => a + b
-// 类型别名
-type Fn = (a: number, b: number) => number
-const fn3:Fn = (a, b) => a + b
-// interface
-interface Fn2 {
-  (a: number, b: number): number,
-  attr: string
-}
-const fn4 =  (a: number, b: number) => number
-fn4.attr = ''
+- 函数声明
 
-// 没有返回值
-type FnReturnVoid = () => void
-const fn5: FnReturnVoid = () => {}
-```
+  ``` ts
+  // 普通函数
+  function fn (a: number): void {}
+  const fn2 = function (a: number): number {}
+  // 箭头函数
+  const fn: (a: number, b: number) => number = (a, b) => a + b
+  const fn2 = (a: number, b: number) => a + b
+  
+  // 类型别名
+  type Fn = (a: number, b: number) => number
+  const fn3:Fn = (a, b) => a + b
+  
+  // interface
+  interface Fn2 {
+    (a: number, b: number): number,
+    attr: string
+  }
+  // or type
+  type Fn2 = {
+    (a: number, b: number): number,
+    attr: string
+  }
+  const fn4 =  (a: number, b: number) => number
+  fn4.attr = ''
+  
+  // 没有返回值
+  type FnReturnVoid = () => void
+  const fn5: FnReturnVoid = () => {}
+  ```
 
-### 函数重载
+- 函数的默认值
 
-``` ts
-function add(a: number, b:number): number
-function add(a: string, b:string): string
-function add(a: number | string, b: number | string): number | string {}	// 这里的类型需包含之前定义的类型，也可以是顶级类型 any unknown
+  当为函数的参数设置默认值时，不需要为参数加类型，TS 会自动推断
 
-add(1, 2)
-add('hello', 'world')
-add('hello', 1)	// error
-```
+  ``` ts
+  function fn (name = 'jay') {}
+  ```
+
+- 可选参数
+
+  ``` ts
+  function fn (a?: string) {}
+  ```
+
+- 函数重载
+
+  ``` ts
+  function add(a: number, b:number): number
+  function add(a: string, b:string): string
+  function add(a: number | string, b: number | string): number | string {}	// 这里的类型需包含之前定义的类型，也可以是顶级类型 any unknown
+  
+  add(1, 2)
+  add('hello', 'world')
+  add('hello', 1)	// error
+  ```
 
 
 
@@ -602,7 +628,7 @@ type Person = {
 type T3 = { [K in keyof Person as `jay${string & K}` ]: string };	
 ````
 
-### 索引类型
+### 索引签名
 
 ```ts
 // 索引类型的 key 只能是 number string symble 和模版字面量类型
