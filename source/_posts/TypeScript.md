@@ -606,7 +606,7 @@ function sayHi (this: number | void, name: string) {
 sayHi('jay')
 ```
 
-### 映射类型
+### 映射类型（Mapped Type）
 
 ```` ts
 { [P in K]: T }	// in 关键字用于遍历 K 类型中的所有类型
@@ -628,7 +628,7 @@ type Person = {
 type T3 = { [K in keyof Person as `jay${string & K}` ]: string };	
 ````
 
-### 索引签名
+### 索引签名（Index Signature）
 
 ```ts
 // 索引类型的 key 只能是 number string symble 和模版字面量类型
@@ -693,6 +693,80 @@ function fn (params: Props) {
 }
 ```
 
+
+
+### 泛型（Generic Types）
+
+把泛型像函数一样使用，类型为泛型的参数。泛型可以理解为是 ts 的函数
+
+``` ts
+type F<A, B> = A | B
+type Result = F<string, number>	// Result: string | number
+
+type Add<T> = (a: T, b: T) => T
+// 在使用时根据传入类型来确定泛型的类型，泛型 Add 接收一个 number，所以泛型中的 T 都为 number
+type AddNumber = Add<number>	// (a: number, b: number) => number
+const add: Add<number> = (a, b) => a + b
+
+// 
+type 
+```
+
+同函数一样泛型也可以使用默认值
+
+``` ts
+interface Hash<T = string> {
+  [key: string]: T
+}
+type Result = Hash	// Result: Hash<string>
+type Result2 = Hash<number>	// Result: Hash<number>
+```
+
+泛型约束 extends
+
+``` ts
+type Gender = 'male' | 'female';
+// 约束 T 的类型必须为 Gender 的子类型，或者说 T 包含于 Gender （T <= Gender）
+type Person<T extends Gender> = T;
+// Person 的泛型必须为 Gender
+const example: Person<'male'> = 'male';
+// ExampleType 的 T 如果存在于 Gender 就返回 T，否则返回 nerver
+type ExampleType<T> = T extends Gender ? T : never
+type ExampleType2 = ExampleType<'male'>	// type ExampleType2 = "male"
+type ExampleType3 = ExampleType<null>	// type ExampleType2 = nerver
+type ExampleType4 = ExampleType<boolean>	// type ExampleType2 = nerver
+type ExampleType5 = ExampleType<'female' | 'male' | boolean | null>	// type ExampleType2 = "male" | 'female'
+
+interface HasLength {
+  length: number
+}
+// arg 必须包含 length
+function example2<T extends HasLength> (arg: T): T {
+  console.log(arg.length)
+  return arg
+}
+
+// 包含关系，T 包含 U 为 true（多的 extends 少的条件成立）
+type Example<T, U> = T extends U ? true : false;
+
+interface A { a: string; }
+interface B { a: string; b: string }
+type T1 = Example<A, B>;	// false
+type T2 = Example<A, A>;	// true
+type T3 = Example<B, A>;	// true
+
+// 被检查的类型不为泛型，仅条件判断
+type T4 = 'a' extends 'a' ? 'yes' : 'no'; // 'yes'
+type T5 = 'a' | 'b' extends 'a' ? 'yes' : 'no'; // 'no'
+// 被检查的类型为泛型，为分布式条件类型
+type Example2<T> = T extends unknown ? T[] : never;
+type T6 = Example2<string | number> // type T6 = string[] | number[]
+
+// 如果 T 为 never，则表达式的值为 never
+type Example3<T> = T extends string ? true : false;
+type T7 = Example3<never>	// T7: never
+```
+
 ### 条件类型
 
 ``` ts
@@ -723,13 +797,101 @@ type T2 = Example2<number | string>;  // type T2 = 'no'
 
 
 
-### 泛型
+## 关键字
 
-把类型当作参数使用
+### infer
 
 ``` ts
-type Add<T> = (a: T, b: T) => T
-const add: Add<number> = (a, b) => a + b	// 在使用时根据传入类型来确定泛型的类型
+// infer 只能在条件类型(T extends X ? Y : Z)的 extends 子句中才能使用
+// infer 声明的变量只能在条件类型的 true 分支中使用
+
+type Example<T> = T extends (infer U)[] ? U : T;	// U 用于存放推断的类型
+// Example 传入 string[]，T 为 string[]
+// T extends (infer U)[] 等于	string[] extends (infer U)[]，类型匹配 string 匹配 (infer U)，[] 匹配 []，因此 U 为 string。
+type T = Example<string[]>	// type T = string
+
+```
+
+### keyof
+
+获取类型的所有 key
+
+``` ts 
+interface Person {
+  name: string;
+  age: number;
+  useTools: () => void;
+}
+type Keys = keyof Person;	// type keys = 'name' | 'age'
+type Values = keyof { [key: string]: Person };  // type Values = string | number
+
+const k: Keys = 'name';
+const k2: Keys = 'age';
+const v: Values = '';
+const v2: Values = 123;
+
+enum Gender {
+  Male,
+  Female
+}
+type G = keyof typeof Gender;	// type G = "Male" | "Female"
+```
+
+### in
+
+遍历类型
+
+``` ts
+type T1 = { [P in 'a' | 'b' ｜ 'c']: string }	// type T1 = { a: string; b: string; c: string; }
+```
+
+### typeof 
+
+在 TS 中可以用来获取变量的类型
+
+``` ts
+const person = { name: 'jay', age: 18 };
+
+type Person = typeof person;	// type Person = { name: string, age: number }
+```
+
+
+
+### as const
+
+``` ts
+let n1 = 1	// 因为 let 声明的变量之后是可以修改的，所以 ts 推断 n1 的类型为 n1: number
+const n2 = 1	// 使用 const 声明的变量是不可修改的，所以 ts 推断 n2 的类型为字面量 1
+
+// 如果，你之后不会为 n1 赋其他值。可以使用 as const，ts 会将变量当作常量推断
+let n1 = 1 as const	// n1 的类型为字面量 1
+```
+
+在 js 中的 const 只是储存变量的内存地址。对于 string number boolean 等简单类型是将值保存在内存空间中；而 array object 等仅仅是保存一个引用，这个引用是不可修改的，但其内部的数据是可以修改的
+
+``` ts
+const array = [1, '2']	// array: (string | bumber)[]
+array.push(3)
+// 使用 as const 后数组的类型就是固定不能修改的
+const array2 = [1, '2'] as const	// array: readonly [1, "2"]
+array.push(3)	// error
+```
+
+例：
+
+``` ts
+// const animal = ['dog', 'cat', 'pig', 'bird'] 是一个变量数组，animal 的类型为 string[]，此时还可以修改数组。
+// 当加了 as const 后 animal 的类型就变成一个只读常量数组（元组）readonly ["dog", "cat", "pig", "bird"]，此时 animal 不能修改。
+// 不加 as const 时，ts 推断出的类型更广泛，加了后推断出的类型更具体
+const animal = ['dog', 'cat', 'pig', 'bird'] as const;	// const animal: readonly ["dog", "cat", "pig", "bird"]
+type AnimalType = typeof animal[number];	// type AnimalType = "dog" | "cat" | "pig" | "bird"
+
+// 没有 as const
+const productType = ['food', 'commodity', 'clothe'];
+console.log(productType.includes(''))	// 此处不会有提示和报错
+// 添加 as const
+const productType = ['food', 'commodity', 'clothe'] as const;
+console.log(productType.includes(''))	// error: Argument of type '""' is not assignable to parameter of type '"food" | "commodity" | "clothe"'
 ```
 
 
@@ -891,124 +1053,6 @@ type Result = Extract<'a' | 'b' | 'c', 'c'>	// type Result = "c"
 
 ``` ts
 type Result = NonNullable<string | number | boolean | undefined>	// type Result = string | number | boolean
-```
-
-
-
-### infer
-
-``` ts
-// infer 只能在条件类型(T extends X ? Y : Z)的 extends 子句中才能使用
-// infer 声明的变量只能在条件类型的 true 分支中使用
-
-type Example<T> = T extends (infer U)[] ? U : T;	// U 用于存放推断的类型
-// Example 传入 string[]，T 为 string[]
-// T extends (infer U)[] 等于	string[] extends (infer U)[]，类型匹配 string 匹配 (infer U)，[] 匹配 []，因此 U 为 string。
-type T = Example<string[]>	// type T = string
-
-```
-
-### keyof
-
-获取类型的所有 key
-
-``` ts 
-interface Person {
-  name: string;
-  age: number;
-  useTools: () => void;
-}
-type Keys = keyof Person;	// type keys = 'name' | 'age'
-type Values = keyof { [key: string]: Person };  // type Values = string | number
-
-const k: Keys = 'name';
-const k2: Keys = 'age';
-const v: Values = '';
-const v2: Values = 123;
-
-enum Gender {
-  Male,
-  Female
-}
-type G = keyof typeof Gender;	// type G = "Male" | "Female"
-```
-
-### extends
-
-泛型约束
-
-``` ts
-type Gender = 'male' | 'female';
-type Person<T extends Gender> = T;	// 约束 T 的类型必须为 Gender 的子类型
-// Person 的泛型必须为 Gender
-const example: Person<'male'> = 'male';
-// ExampleType 的 T 如果存在于 Gender 就返回 T，否则返回 nerver
-type ExampleType<T> = T extends Gender ? T : never
-type ExampleType2 = ExampleType<'male'>	// type ExampleType2 = "male"
-type ExampleType3 = ExampleType<null>	// type ExampleType2 = nerver
-type ExampleType4 = ExampleType<boolean>	// type ExampleType2 = nerver
-type ExampleType5 = ExampleType<'female' | 'male' | boolean | null>	// type ExampleType2 = "male" | 'female'
-
-interface HasLength {
-  length: number
-}
-// arg 必须包含 length
-function example2<T extends HasLength> (arg: T): T {
-  console.log(arg.length)
-  return arg
-}
-
-// 包含关系，T 包含 U 为 true
-type Example<T, U> = T extends U ? true : false;
-
-interface A { a: string; }
-interface B { a: string; b: string }
-type T1 = Example<A, B>;	// false
-type T2 = Example<A, A>;	// true
-type T3 = Example<B, A>;	// true
-
-// 被检查的类型不为泛型，仅条件判断
-type T4 = 'a' extends 'a' ? 'yes' : 'no'; // 'yes'
-type T5 = 'a' | 'b' extends 'a' ? 'yes' : 'no'; // 'no'
-// 被检查的类型为泛型，为分布式条件类型
-type Example2<T> = T extends 'a' ? 'yes' : 'no';
-type T6 = Example2<'a' | 'b'> // type T6 = 'yes' | 'no'
-```
-
-### in
-
-遍历类型
-
-``` ts
-type T1 = { [P in 'a' | 'b' ｜ 'c']: string }	// type T1 = { a: string; b: string; c: string; }
-```
-
-### typeof 
-
-在 TS 中可以用来获取变量的类型
-
-``` ts
-const person = { name: 'jay', age: 18 };
-
-type Person = typeof person;	// type Person = { name: string, age: number }
-```
-
-
-
-### as const
-
-``` ts
-// const animal = ['dog', 'cat', 'pig', 'bird'] 是一个变量数组， const animal: string[]，此时还可以修改数组。
-// 当加了 as const 后就变成一个只读常量数组（元组），此时 animal 不能修改
-const animal = ['dog', 'cat', 'pig', 'bird'] as const;	// const animal: readonly ["dog", "cat", "pig", "bird"]
-type AnimalType = typeof animal[number];	// type AnimalType = "dog" | "cat" | "pig" | "bird"
-
-// 没有 as const
-const productType = ['food', 'commodity', 'clothe'];
-console.log(productType.includes(''))	// 此处不会有提示和报错
-// 添加 as const
-const productType = ['food', 'commodity', 'clothe'] as const;
-console.log(productType.includes(''))	// error: Argument of type '""' is not assignable to parameter of type '"food" | "commodity" | "clothe"'
 ```
 
 
