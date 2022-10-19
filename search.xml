@@ -15,9 +15,9 @@
           
           <category> Vite </category>
           
-          <category> Vue3 </category>
-          
           <category> Typescript </category>
+          
+          <category> Vue3 </category>
           
           <category> web3 </category>
           
@@ -106,9 +106,9 @@
           
           <category> Vite </category>
           
-          <category> Vue3 </category>
-          
           <category> Typescript </category>
+          
+          <category> Vue3 </category>
           
           <category> web3 </category>
           
@@ -265,7 +265,7 @@
     
     
     <entry>
-      <title></title>
+      <title>TypeScript</title>
       <link href="/2019/07/26/TypeScript/"/>
       <url>/2019/07/26/TypeScript/</url>
       
