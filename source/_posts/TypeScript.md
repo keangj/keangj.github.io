@@ -1,5 +1,5 @@
 ---
-htitle: TypeScript
+title: TypeScript
 date: 2019-07-26 17:18:47
 updated: 2022-05-21
 tags: TypeScript
