@@ -206,7 +206,7 @@ value = ''
 value = []
 ```
 
-### Unknown
+### unknown
 
 `unknown` 可以认为是其他类型的联合类型
 
@@ -726,7 +726,7 @@ type Result2 = Hash<number>	// Result: Hash<number>
 
 ``` ts
 type Gender = 'male' | 'female';
-// 约束 T 的类型必须为 Gender 的子类型，或者说 T 包含于 Gender （T <= Gender）
+// 约束 T 的类型必须为 Gender 的子类型
 type Person<T extends Gender> = T;
 // Person 的泛型必须为 Gender
 const example: Person<'male'> = 'male';
@@ -747,6 +747,7 @@ function example2<T extends HasLength> (arg: T): T {
 }
 
 // 包含关系，T 包含 U 为 true（多的 extends 少的条件成立）
+// T 具有 U 的所有属性，并且这些属性的类型可以被赋值给对应的 U 属性的类型。
 type Example<T, U> = T extends U ? true : false;
 
 interface A { a: string; }
@@ -839,7 +840,7 @@ type G = keyof typeof Gender;	// type G = "Male" | "Female"
 
 ### in
 
-遍历类型
+映射（遍历）类型
 
 ``` ts
 type T1 = { [P in 'a' | 'b' ｜ 'c']: string }	// type T1 = { a: string; b: string; c: string; }
@@ -987,6 +988,13 @@ interface Person3 {
 ```
 
 ### Omit<T, K>
+
+``` ts
+type Omit<T, K> = {
+  // [] 中可分为两部分，key in keyof T 和 key extends K ? never : key，然后将前者断言为后者
+  [key in keyof T as key extends K ? never : key]: T
+}
+```
 
 返回 T 并去除 K 属性
 

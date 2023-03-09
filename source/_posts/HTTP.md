@@ -360,3 +360,4 @@ HTTP 存在以下问题，通信内容在所有的通信线路上都有可能遭
  HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用 SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。
 通常，HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。
  SSL 是独立于 HTTP 的协议，所以不只是 HTTP 协议，其他运行在应用层的协议均可配合 SSL 协议使用。
+
