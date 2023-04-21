@@ -61,12 +61,15 @@ docker-compose --version
 docker run --name <容器名> -p 8000:3000 -d <your username>/node-web-app
 ```
 
-| 参数 | 说明                                                         |
-| :--: | :----------------------------------------------------------- |
-|  -d  | 守护容器，就是后台运行，退出命令窗口容器也不会停止           |
-| -it  | 交互式容器 退出命令窗口容器就停止运行了。将容器的 shell 映射到当前的 shell，你在本级窗口输入的命令，会传入容器 |
-|  -p  | 宿主机端口和容器端口映射，将容器的 3000 端口映射到本机的 8000 端口 |
-|  -e  | MYSQL_ROOT_PASSWORD=123456：初始化root用户的密码             |
+|    参数    | 说明                                                         |
+| :--------: | :----------------------------------------------------------- |
+|     -d     | 守护容器，就是后台运行，退出命令窗口容器也不会停止           |
+|    -it     | 交互式容器 退出命令窗口容器就停止运行了。将容器的 shell 映射到当前的 shell，你在本级窗口输入的命令，会传入容器 |
+|     -p     | 宿主机端口和容器端口映射。如：`-p 8000:3000` 将容器的 3000 端口映射到本机的 8000 端口 |
+|     -e     | env，环境变量。如：`-e MYSQL_ROOT_PASSWORD=123456`：初始化root用户的密码 |
+|     -v     | 数据持久化映射。如：`-v volume-data:/var/lib/postgresql/data` |
+|   --name   | 容器名。如：`--name hello`                                   |
+| -- network | 容器网络。如：`--networ=new-network`                         |
 
 ## 容器常用操作
 
@@ -81,6 +84,8 @@ docker logs <container id>	# 查看容器日志
 docker ps	# 查看正在运行的容器
 docker ps -a	# 查看所有容器
 docker system prune	# 删除所有停止的容器
+docker volume prune	# 删除所有没用到的数据卷
+docker inspect <container id> # 查看容器信息
 ```
 
 ## 镜像常用操作
