@@ -5,7 +5,7 @@ updated: 2021-07-15 19:04:48
 tags: JavaScript
 categories: 
   - ['Vite']
-cover: https://library.kissclipart.com/20181128/tsw/kissclipart-orange-clipart-ecmascript-javascript-ecma-internat-3885764678295034.png
+cover: https://unpkg.com/keangj-assets@1.0.6/img/js.png
 ---
 
 ## Promise

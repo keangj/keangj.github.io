@@ -7,7 +7,7 @@ categories:
   - ['Vite']
   - ['Vue']
   - ['Typescript']
-cover: https://d33wubrfki0l68.cloudfront.net/11c77ae9e5215fff33a7deefdc6fd991989ae0a0/d5746/vite-article.svg
+cover: https://unpkg.com/keangj-assets@1.0.6/img/vite.svg
 ---
 
 ## 初始化项目

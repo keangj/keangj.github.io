@@ -5,7 +5,7 @@ updated: 2021-07-02
 tags: HTTP
 categories: 
   - ['HTTP']
-cover: http://lofrev.net/wp-content/photos/2017/04/http_logo_dpwnload.png
+cover: https://unpkg.com/keangj-assets@1.0.6/img/http.png
 ---
 # HTTP
 

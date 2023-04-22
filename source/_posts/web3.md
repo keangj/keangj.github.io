@@ -6,7 +6,7 @@ updated: 2022-04-26 20:00:00
 categories: 
   - ['Typescript']
   - ['web3']
-cover: https://logowik.com/content/uploads/images/web36984.jpg
+cover: https://unpkg.com/keangj-assets@1.0.6/img/web3.jpeg
 
 ---
 

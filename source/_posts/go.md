@@ -5,7 +5,7 @@ date: 2023-04-20 22:00:00
 updated: 2023-04-20 20:00:00
 categories: 
   - ['Go']
-cover: https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Go_Logo_Blue.svg/2880px-Go_Logo_Blue.svg.png
+cover: https://unpkg.com/keangj-assets@1.0.6/img/go.png
 
 ---
 

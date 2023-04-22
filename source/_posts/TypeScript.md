@@ -5,7 +5,7 @@ updated: 2022-05-21
 tags: TypeScript
 categories: 
   - ['Typescript']
-cover: https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/09/typescript.png
+cover: https://unpkg.com/keangj-assets@1.0.6/img/typescript.png
 sticky: 10
 ---
 

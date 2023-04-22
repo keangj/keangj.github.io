@@ -8,7 +8,7 @@ categories:
   - ['Vue3']
   - ['Typescript']
   - ['web3']
-cover: https://github.com/ChainSafe/web3.js/blob/1.x/assets/logo/web3js.jpg?raw=true
+cover: https://unpkg.com/keangj-assets@1.0.6/img/web3.jpeg
 
 ---
 

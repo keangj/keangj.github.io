@@ -5,7 +5,7 @@ updated: 2021-07-07 13:46:52
 tags: webpack
 categories: 
   - ['webpack']
-cover: https://pic2.zhimg.com/v2-a30354356c88fd82b42cbf231af0449d_180x120.jpg
+cover: https://unpkg.com/keangj-assets@1.0.6/img/webpack.jpeg
 ---
 
 ## webpack5 

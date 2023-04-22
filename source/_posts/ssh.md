@@ -5,7 +5,7 @@ updated: 2022-05-11 20:00:00
 tags: [SSH]
 categories: 
   - [SSH]
-cover: https://elblogdebart.com/wp-content/uploads/2019/04/ssh.jpg
+cover: https://unpkg.com/keangj-assets@1.0.6/img/ssh.jpg
 
 ---
 

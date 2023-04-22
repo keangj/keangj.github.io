@@ -27,11 +27,11 @@ menu:
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: mac light #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
 highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
-highlight_height_limit: false # unit: px
+highlight_height_limit: 300 # unit: px
 code_word_wrap: true
 
 # Social Settings (社交圖標設置)
@@ -137,7 +137,7 @@ anchor:
     enable: false
     always_show: false
     icon: # the unicode value of Font Awesome icon, such as '\3423'
-  auto_update: false # when you scroll in post, the URL will update according to header id.
+  auto_update: true # when you scroll in post, the URL will update according to header id.
 
 # figcaption (圖片描述文字)
 photofigcaption: false
@@ -147,8 +147,8 @@ photofigcaption: false
 copy:
   enable: true
   copyright:
-    enable: false
-    limit_count: 80
+    enable: true
+    limit_count: 120
 
 # Post
 # --------------------------------------
@@ -236,10 +236,10 @@ aside:
     enable: true
     description:
     button:
-      enable: true
+      enable: false
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/keangj
   card_announcement:
     enable: true
     content: 不定期更新
@@ -299,7 +299,7 @@ newest_comments:
 
 # Conversion between Traditional and Simplified Chinese (簡繁轉換)
 translate:
-  enable: false
+  enable: true
   # The text of a button
   default: 繁
   # the language of website (1 - Traditional Chinese/ 2 - Simplified Chinese）
@@ -325,11 +325,11 @@ darkmode:
   # autoChangeMode: false
   autoChangeMode: 1
   # Set the light mode time. The value is between 0 and 24. If not set, the default value is 6 and 18
-  start: # 8
-  end: # 22
+  start: 8 # 8
+  end: 22 # 22
 
 # show scroll percent in scroll-to-top button
-rightside_scroll_percent: false
+rightside_scroll_percent: true
 
 # Don't modify the following settings unless you know how they work (非必要請不要修改 )
 # Choose: readmode,translate,darkmode,hideAside,toc,chat,comment
@@ -380,7 +380,7 @@ local_search:
 
 # Docsearch
 docsearch:
-  enable: false
+  enable: true
   appId:
   apiKey:
   indexName:
@@ -570,7 +570,7 @@ messenger:
 
 # Baidu Analytics
 # https://tongji.baidu.com/web/welcome/login
-baidu_analytics:
+baidu_analytics: 2b18fc5861131fae35675177f98dc5bd
 
 # Google Analytics
 # https://analytics.google.com/analytics/web/
@@ -775,7 +775,7 @@ preloader:
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 1
+  source: 2
   # pace theme (see https://codebyzach.github.io/pace/)
   pace_css_url:
 

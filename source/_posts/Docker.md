@@ -5,7 +5,7 @@ updated: 2022-04-22 20:00:00
 tags: Docker
 categories: 
   - ['Docker']
-cover: https://pbs.twimg.com/media/FQoy4TNXwAkV8he?format=jpg&name=small
+cover: https://unpkg.com/keangj-assets@1.0.6/img/docker.jpeg
 
 ---
 

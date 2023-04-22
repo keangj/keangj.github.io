@@ -5,7 +5,7 @@ updated: 2021-08-20
 tags: Vue
 categories: 
   - ['Vue']
-cover:  https://www.vectorlogo.zone/logos/vuejs/vuejs-ar21.png
+cover:  https://unpkg.com/keangj-assets@1.0.6/img/vue.png
 ---
 
 # Vue 组件通信
