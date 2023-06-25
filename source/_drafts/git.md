@@ -62,4 +62,32 @@ git remote set-url origin git@github.com:example.git	# 重新设置远程仓库
 
 ## Rebase
 
-Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。
+
+
+``` sh
+git rebase -i HEAD~2 # HEAD~ 后的数字表示选择最新的几次提交，数字 2 选择最近两次提交
+```
+
+然后会出现编辑器有如下内容
+
+``` sh
+pick b52760a commit one
+pick bd260cc commit two
+```
+
+将需要合并提交前面的 pick 改为 s(fixup) 或者 f(squash)
+
+``` sh
+pick b52760a commit one # 保留的提交
+s bd260cc commit two # 被合并的提交
+```
+
+s 和 f 都可以将提交合并到 pick 中；s 会保留提交信息，而 f 则不保留提交信息
+
+
+
+## 常用功能
+
+- 修改提交信息
+
+  `git commit --amend`
