@@ -37,7 +37,7 @@ ssh user@ip 'bash -s' < test.sh
 
 `-C`参数可以为密钥文件指定新的注释，格式为`username@host`
 
--t 指定密钥的加密算法，如 dsa rsa ed25519
+`-t` 指定密钥的加密算法，如 dsa rsa ed25519
 
 `-f`参数指定生成的私钥文件
 

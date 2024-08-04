@@ -13,14 +13,17 @@ cover: https://unpkg.com/keangj-assets@1.0.6/img/Mongo.png
 ## 操作数据库
 
 - 创建、切换  
-    
+  
     `use 数据库名`  
+    
     切换数据库，如不存在就创建一个新的数据库。
     
     ```use test```
     
 - 删除  
+    
     `db.dropDatabase()`  
+    
     删除数据库
     
 - 查看  

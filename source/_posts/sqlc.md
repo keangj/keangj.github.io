@@ -1,5 +1,5 @@
 ---
-title: sqlc
+title: sqlc 操作数据库
 tags: [Go, sqlc, PostgreSQL, 数据库]
 date: 2023-05-08 12:00:00
 updated: 2023-05-20 20:00:00
@@ -13,7 +13,7 @@ cover: https://unpkg.com/keangj-assets@1.0.6/img/go.png
 
 ---
 
-# [sqlc](https://sqlc.dev/) 连接 PostgreSQL
+# [sqlc](https://sqlc.dev/) 操作数据库 PostgreSQL
 
 ## sqlc 基本使用
 

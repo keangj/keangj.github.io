@@ -65,8 +65,10 @@ import (
 
 ``` go
 type User struct {
+  // 结构体属性的首字母是大写,为共有属性.首字母是小写,为私有属性.
   Username string
   Age      int
+  skin		 string // 私有属性 
 }
 func main() {
   u := User{Username: "tom", Age: 18}
@@ -96,6 +98,59 @@ func main() {
 	fmt.Println("rename2", u) // {"jay", 18}，值被修改
 }
 ```
+
+继承
+
+``` go
+// 父
+type Animal struct {
+  name string
+  age	int
+}
+// 父方法
+func (a *Animal) Eat() {
+  fmt.Println("Human Eat")
+}
+func (a *Animal) Run() {
+  fmt.Println("Human Run")
+}
+
+type Dog s struct {
+  Animal	// Dog 继承  Animal
+  skin string
+}
+
+func (d *Dog) Run() {
+  fmt.Println("Dog Run")
+}
+func (d *Dog) Bark() {
+  fmt.Println("Dog 汪")
+}
+
+func main() {
+  a := Animal{"tom", 18}
+  a.Eat()	// Human Eat
+  a.Run()	// Human Run
+  
+  // 两种方式
+  d := Dog{Animal{"旺财", 20}, skin: "yellow"}
+  // or
+  var d Dog
+  d.name = "旺财"
+  d.age = 20
+  d.skin = "yellow"
+  
+  d.Eat() // Human Eat
+  d.Run() // Dog Eat
+  d.Bark()	// Dog 汪
+}
+```
+
+
+
+## Interface
+
+
 
 
 
@@ -272,7 +327,7 @@ var (
 
 ## 常量
 
-常量的声明与变量类似，使用 `const` 关键字。常量时不能修改的，且不能使用 `:=` 声明
+常量的声明与变量类似，使用 `const` 关键字。常量不可以修改，且不能使用 `:=` 声明
 
 ``` go
 const n int = 10
@@ -347,7 +402,8 @@ default:
 ## for 循环
 
 ``` go
-// 三个表达式，等价 JS 的 for(初始化; 判断; 后续)
+// 三个表达式，等价 JS 的 for(初始化:在第一次迭代前执行; 条件表达式:在每次迭代前求值; 后续:在每次迭代的结尾执行)
+// 初始化时的变量声明仅在 for 的作用域中存在
 for j := 1; j <= 3; j++ {
   fmt.Println(j)
 }
@@ -367,6 +423,21 @@ for {
   }
   fmt.Println("loop")
   k++
+}
+```
+
+
+
+## Range 遍历
+
+``` go
+// 用range可以枚举 array、slice、string、map、channel等不同类型
+// 对于channel，range返回一个值，
+// array、slice、string、map等其他类型返回一对儿
+nums := []int{2, 3, 4}
+for k, v := range nums {
+	fmt.Println("num:", v)	// 依次打印出 2 3 4
+	fmt.Println("i:", k)	// 依次打印出 0 1 2
 }
 ```
 
@@ -568,5 +639,36 @@ for key, value := range mapExample {
 _, hasKey := mapExample["t2"]
 // 获取 length
 fmt.Println(len(mapExample))
+```
+
+
+
+
+
+## go mod
+
+``` sh
+go mod download # 下载 go.mod 文件中指明的所有依赖
+go mod edit # 编辑 go.mod 文件
+go mod graph # 查看现有的依赖结构
+go mod init # 生成 go.mod 文件
+go mod tidy # 整理现有的依赖
+go mod vendor # 导出项目所有的依赖到vendor目录
+go mod verify # 校验一个模块是否被篡改过
+go mod why # 查看为什么需要依赖某模块
+```
+
+
+
+## go 相关命令
+
+``` sh
+go version	# 查看版本
+go env # 查看环境变量
+go env -w GO111MODULE=on # 设置 GO111MODULE
+# aoto: 默认值, 项目包含 go.mod 文件时启用 Go modules. on: 启用, 推荐设置. off: 禁用
+go env GO111MODULE	# 查看设置
+go env -w GOPROXY=https://goproxy.cn,direct # 设置代理, 也可以把 GOPROXY=https://goproxy.cn,direct 加到 go 命令前来临时使用. 如: GOPROXY=https://goproxy.cn,direct go mod tidy
+go env GOPROXY	# 查看代理
 ```
 

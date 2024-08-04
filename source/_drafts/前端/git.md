@@ -10,6 +10,12 @@ git diff --cached # 比较暂存区与版本区的差异
 git diff master # 比较工作区与版本区的差异
 ```
 
+## 查看账户
+
+``` sh
+
+```
+
 ### 基本
 
 ``` sh
@@ -18,6 +24,8 @@ git status # 查看当前仓库状态信息
 git status -sb
 git add <file> # 将文件加入暂存区
 git revert
+git revert HEAD # 撤销上一个提交
+git revert [倒数第一个提交] [倒数第二个提交] # 抵消多个提交
 git reset HEAD <file> # 暂存区与版本区保持一致
 git reset --hard <version> # 恢复版本区指定版本的内容到工作区
 git checkout <file>	# 暂存区（或者版本区）覆盖工作区的内容
@@ -29,7 +37,7 @@ git log	# 查看日志
 git status -sb	# 显示所有的状态和总结
 git rebase -i HEAD~3 # 合并最近三次 commit
 git rm --cached <file>	# 将 file 从 git 仓库删除
-
+git checkout -- [filename] # 找回本次修改之前的文件
 git stash
 git stash pop
 
