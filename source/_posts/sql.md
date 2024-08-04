@@ -1,12 +1,12 @@
 ---
-title: mongoDB
+title: SQL
 date: 2024-06-28 22:17:14
 updated: 2024-06-28 22:17:14
 tags: [SQL, MYSQL]
 categories: 
   - ['SQL']
   - ['MYSQL']
-cover: https://unpkg.com/keangj-assets@1.0.6/img/sql.jpg
+cover: https://unpkg.com/keangj-assets@1.0.7/img/sql.jpg
 
 ---
 
