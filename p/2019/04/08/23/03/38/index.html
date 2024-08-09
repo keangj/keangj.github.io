@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Underscore | 日常小记</title><meta name="author" content="Jay"><meta name="copyright" content="Jay"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Underscore 基本用法  Collections  map() 对集合每一项进行一些操作，返回新数组 _.map([1, 2, 3, 4, 5], i &#x3D;&gt; i+1)    &#x2F;&#x2F;   [2, 3, 4, 5, 6]  each() 遍历集合类似map _.each([1, 2, 3, 4, 5], i &#x3D;&gt; console.log(i+1))  &#x2F;&#x2F; 2 3 4 5 6  r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Underscore">
+<meta property="og:url" content="https://keangj.github.io/p/2019/04/08/23/03/38/index.html">
+<meta property="og:site_name" content="日常小记">
+<meta property="og:description" content="Underscore 基本用法  Collections  map() 对集合每一项进行一些操作，返回新数组 _.map([1, 2, 3, 4, 5], i &#x3D;&gt; i+1)    &#x2F;&#x2F;   [2, 3, 4, 5, 6]  each() 遍历集合类似map _.each([1, 2, 3, 4, 5], i &#x3D;&gt; console.log(i+1))  &#x2F;&#x2F; 2 3 4 5 6  r">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images-platform.99static.com/WG4uXLVV_iftAlJttXgvXgU6th0=/500x500/top/smart/99designs-contests-attachments/12/12583/attachment_12583422">
+<meta property="article:published_time" content="2019-04-08T23:03:38.000Z">
+<meta property="article:modified_time" content="2019-04-08T23:03:38.000Z">
+<meta property="article:author" content="Jay">
+<meta property="article:tag" content="lodash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images-platform.99static.com/WG4uXLVV_iftAlJttXgvXgU6th0=/500x500/top/smart/99designs-contests-attachments/12/12583/attachment_12583422"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/logo.jpeg"><link rel="canonical" href="https://keangj.github.io/p/2019/04/08/23/03/38/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2b18fc5861131fae35675177f98dc5bd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":120,"languages":{"author":"作者: Jay","link":"链接: ","source":"来源: 日常小记","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Underscore',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-04-08 23:03:38'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/callout_blocks.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/26164191?s=400&amp;u=132d7e53e4f5b1e23d795ae9f79daad3b875de06&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://images-platform.99static.com/WG4uXLVV_iftAlJttXgvXgU6th0=/500x500/top/smart/99designs-contests-attachments/12/12583/attachment_12583422')"><nav id="nav"><span id="blog-info"><a href="/" title="日常小记"><span class="site-name">日常小记</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Underscore</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-08T23:03:38.000Z" title="发表于 2019-04-08 23:03:38">2019-04-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-04-08T23:03:38.000Z" title="更新于 2019-04-08 23:03:38">2019-04-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Javascript/">Javascript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title="Underscore"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/p/2019/04/08/23/03/38/#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="underscore-基本用法"><a class="markdownIt-Anchor" href="#underscore-基本用法"></a> Underscore 基本用法</h1>
+<h2 id="collections"><a class="markdownIt-Anchor" href="#collections"></a> Collections</h2>
+<h3 id="map-对集合每一项进行一些操作返回新数组"><a class="markdownIt-Anchor" href="#map-对集合每一项进行一些操作返回新数组"></a> map() 对集合每一项进行一些操作，返回新数组</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">map</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="function"><span class="params">i</span> =&gt;</span> i+<span class="number">1</span>)    <span class="comment">//   [2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<h3 id="each-遍历集合类似map"><a class="markdownIt-Anchor" href="#each-遍历集合类似map"></a> each() 遍历集合类似map</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">each</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="function"><span class="params">i</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(i+<span class="number">1</span>))  <span class="comment">// 2 3 4 5 6</span></span><br></pre></td></tr></table></figure>
+<h3 id="reduce-对集合进行操作且累计并返回结果第三个参数为操作初始值"><a class="markdownIt-Anchor" href="#reduce-对集合进行操作且累计并返回结果第三个参数为操作初始值"></a> reduce() 对集合进行操作且累计并返回结果，第三个参数为操作初始值</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">reduce</span>([<span class="number">1</span>, <span class="number">2</span> ,<span class="number">3</span>], <span class="function">(<span class="params">memo, num</span>) =&gt;</span> memo + num, <span class="number">0</span>)   <span class="comment">// 6</span></span><br><span class="line">_.<span class="title function_">reduce</span>([<span class="number">1</span>, <span class="number">2</span> ,<span class="number">3</span>], <span class="function">(<span class="params">memo, num</span>) =&gt;</span> memo + num, <span class="number">10</span>)   <span class="comment">// 16</span></span><br><span class="line">_.<span class="title function_">reduce</span>([<span class="number">1</span>, <span class="number">2</span> ,<span class="number">3</span>], <span class="function">(<span class="params">memo, num</span>) =&gt;</span> memo * num, <span class="number">1</span>)   <span class="comment">// 6</span></span><br><span class="line">_.<span class="title function_">reduce</span>([<span class="number">1</span>, <span class="number">2</span> ,<span class="number">3</span>], <span class="function">(<span class="params">memo, num</span>) =&gt;</span> memo * num, <span class="number">10</span>)  <span class="comment">// 60</span></span><br></pre></td></tr></table></figure>
+<h3 id="shuffle-打乱集合顺序"><a class="markdownIt-Anchor" href="#shuffle-打乱集合顺序"></a> shuffle() 打乱集合顺序</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">_.<span class="title function_">shuffle</span>(arr)  <span class="comment">// [3, 4, 2, 1, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="sample-从集合中随机选择一个或指定数目的项"><a class="markdownIt-Anchor" href="#sample-从集合中随机选择一个或指定数目的项"></a> sample() 从集合中随机选择一个或指定数目的项</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">_.<span class="title function_">sample</span>(arr) <span class="comment">// 2</span></span><br><span class="line">_.<span class="title function_">sample</span>(arr, <span class="number">2</span>) <span class="comment">// [2, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="every-集合的每一个项都符合条件返回true否则返回false"><a class="markdownIt-Anchor" href="#every-集合的每一个项都符合条件返回true否则返回false"></a> every() 集合的每一个项都符合条件返回true，否则返回false</h3>
+<h3 id="some-集合的某一个项符合条件返回true否则返回false"><a class="markdownIt-Anchor" href="#some-集合的某一个项符合条件返回true否则返回false"></a> some() 集合的某一个项符合条件返回true，否则返回false</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">every</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> ,<span class="number">0</span>], <span class="function"><span class="params">item</span> =&gt;</span> item === <span class="number">0</span> )  <span class="comment">// true</span></span><br><span class="line">_.<span class="title function_">every</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span> ,<span class="number">0</span>], <span class="function"><span class="params">item</span> =&gt;</span> item === <span class="number">0</span> ) <span class="comment">// false</span></span><br><span class="line">_.<span class="title function_">some</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> ,<span class="number">0</span>], <span class="function"><span class="params">item</span> =&gt;</span> item === <span class="number">0</span> )  <span class="comment">// true</span></span><br><span class="line">_.<span class="title function_">some</span>([<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span> ,<span class="number">0</span>], <span class="function"><span class="params">item</span> =&gt;</span> item === <span class="number">0</span> )  <span class="comment">// true</span></span><br><span class="line">_.<span class="title function_">some</span>([<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span> ,<span class="number">1</span>], <span class="function"><span class="params">item</span> =&gt;</span> item === <span class="number">0</span> ) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="find-查找集合中符合条件的第一项"><a class="markdownIt-Anchor" href="#find-查找集合中符合条件的第一项"></a> find() 查找集合中符合条件的第一项</h3>
+<h3 id="filter-返回所有符合条件的元素"><a class="markdownIt-Anchor" href="#filter-返回所有符合条件的元素"></a> filter() 返回所有符合条件的元素</h3>
+<h3 id="reject-与-filter-相反"><a class="markdownIt-Anchor" href="#reject-与-filter-相反"></a> reject() 与 filter() 相反</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">find</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">gender</span>===<span class="string">&#x27;male&#x27;</span> )</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;</span></span><br><span class="line">_.<span class="title function_">filter</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">gender</span> === <span class="string">&#x27;male&#x27;</span> )</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27;&#125;&#123;name: &#x27;Kang&#x27;, age: 14, gender: &#x27;male&#x27; &#125;</span></span><br><span class="line">_.<span class="title function_">reject</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">gender</span>===<span class="string">&#x27;male&#x27;</span> )</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Christine&#x27;, age: 6, gender: &#x27;female&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="where-返回包含条件的项"><a class="markdownIt-Anchor" href="#where-返回包含条件的项"></a> where() 返回包含条件的项</h3>
+<h3 id="findwhere-同-where只返回第一个项"><a class="markdownIt-Anchor" href="#findwhere-同-where只返回第一个项"></a> findWhere() 同 where，只返回第一个项</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">where</span>(p, &#123;<span class="attr">name</span>:<span class="string">&#x27;Jay&#x27;</span>&#125;)</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;</span></span><br><span class="line">_.<span class="title function_">where</span>(p, &#123;<span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;)</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27;&#125;&#123;name: &#x27;Kang&#x27;, age: 14, gender: &#x27;male&#x27; &#125;</span></span><br><span class="line">_.<span class="title function_">findWhere</span>(p, &#123;<span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;)</span><br><span class="line"><span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="contains-包含指定的值返回-true"><a class="markdownIt-Anchor" href="#contains-包含指定的值返回-true"></a> contains() 包含指定的值，返回 true</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>]</span><br><span class="line">_.<span class="title function_">contains</span>(arr, <span class="number">2</span>)  <span class="comment">// true</span></span><br><span class="line">_.<span class="title function_">contains</span>(arr, <span class="number">4</span>)  <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="pluck-返回指定-key-的-value"><a class="markdownIt-Anchor" href="#pluck-返回指定-key-的-value"></a> pluck() 返回指定 key 的 value</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">pluck</span>(p, <span class="string">&#x27;name&#x27;</span> ) <span class="comment">// [ &#x27;Jay&#x27;, &#x27;Kang&#x27;, &#x27;Christine&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="max-返回最大值"><a class="markdownIt-Anchor" href="#max-返回最大值"></a> max() 返回最大值</h3>
+<h3 id="min-返回最小值"><a class="markdownIt-Anchor" href="#min-返回最小值"></a> min() 返回最小值</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">max</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">age</span> )  <span class="comment">// &#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;</span></span><br><span class="line">_.<span class="title function_">min</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">age</span> )  <span class="comment">// &#123; name: &#x27;Christine&#x27;, age: 6, gender: &#x27;female&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="groupby-按-key-把一个集合分成多个集合"><a class="markdownIt-Anchor" href="#groupby-按-key-把一个集合分成多个集合"></a> groupBy() 按 key 把一个集合分成多个集合</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">groupBy</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">gender</span> )   </span><br><span class="line"><span class="comment">// &#123; female: [&#123; name: &#x27;Christine&#x27;, age: 6, gender: &#x27;female&#x27; &#125;],</span></span><br><span class="line"><span class="comment">//   male: [&#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;, &#123; name: &#x27;Kang&#x27;, age: 14, gender: &#x27;male&#x27;&#125;] &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="indexby-返回以指定-key的-value-分类的对象"><a class="markdownIt-Anchor" href="#indexby-返回以指定-key的-value-分类的对象"></a> indexBy() 返回以指定 key的 value 分类的对象</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">groupBy</span>(p, <span class="string">&#x27;gender&#x27;</span> ) </span><br><span class="line"><span class="comment">// &#123; female: [&#123; name: &#x27;Christine&#x27;, age: 6, gender: &#x27;female&#x27; &#125;],</span></span><br><span class="line"><span class="comment">//   male: [&#123; name: &#x27;Jay&#x27;, age: 18, gender: &#x27;male&#x27; &#125;, &#123; name: &#x27;Kang&#x27;, age: 14, gender: &#x27;male&#x27;&#125;] &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="countby-返回依据条件分类的每一类的数目"><a class="markdownIt-Anchor" href="#countby-返回依据条件分类的每一类的数目"></a> countBy() 返回依据条件分类的每一类的数目</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Jay&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Kang&#x27;</span>, <span class="attr">age</span>: <span class="number">14</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&#x27;Christine&#x27;</span>, <span class="attr">age</span>: <span class="number">6</span>, <span class="attr">gender</span>: <span class="string">&#x27;female&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line">_.<span class="title function_">countBy</span>(p, <span class="function"><span class="params">item</span>=&gt;</span> item.<span class="property">age</span> &gt; <span class="number">10</span> ? <span class="string">&#x27;小学僧&#x27;</span> : <span class="string">&#x27;中学僧&#x27;</span> ) <span class="comment">// &#123; &#x27;小学僧&#x27;: 2, &#x27;中学僧&#x27;: 1 &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="size-返回集合长度"><a class="markdownIt-Anchor" href="#size-返回集合长度"></a> size() 返回集合长度</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">size</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="partition-返回数组包含两个数组第一个符合条件第二个不符合条件"><a class="markdownIt-Anchor" href="#partition-返回数组包含两个数组第一个符合条件第二个不符合条件"></a> partition() 返回数组包含两个数组，第一个符合条件，第二个不符合条件</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">partition</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="function"><span class="params">i</span> =&gt;</span> i &gt; <span class="number">2</span>) <span class="comment">// [ [3, 4, 5], [1, 2] ]</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组arrays"><a class="markdownIt-Anchor" href="#数组arrays"></a> 数组(Arrays)</h2>
+<ul>
+<li>
+<p>first() 返回数组的第一个元素</p>
+</li>
+<li>
+<p>initial() 返回除最后一个(或多个)以外的元素</p>
+</li>
+<li>
+<p>last() 返回数组的最后一个元素</p>
+</li>
+<li>
+<p>rest() 返回除第一个(或多个)以外的元素</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">first</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment">// 1</span></span><br><span class="line">_.<span class="title function_">first</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="number">2</span>)  <span class="comment">// [1, 2]</span></span><br><span class="line">_.<span class="title function_">initial</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment">// [1, 2, 3, 4]</span></span><br><span class="line">_.<span class="title function_">last</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment">// [5]</span></span><br><span class="line">_.<span class="title function_">rest</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment">// [2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>compact() 返回不包含 false 值的数组</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">compact</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="literal">false</span>, <span class="string">&#x27;&#x27;</span>, <span class="literal">null</span>, <span class="literal">undefined</span>])  <span class="comment">// [1, 2]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>flatten() 将多层嵌套的数组转化成减少至一层,传递第二个参数为 true 就只减少一层</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">flatten</span>([<span class="number">1</span>, [<span class="number">2</span>, [<span class="number">3</span>]]])  <span class="comment">// [1, 2, 3]</span></span><br><span class="line">_.<span class="title function_">flatten</span>([<span class="number">1</span>, [<span class="number">2</span>, [<span class="number">3</span>]]], <span class="literal">true</span>)  <span class="comment">// [1, 2, [3]]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>without() 返回一个不包含指定值的数组</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">without</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>], <span class="number">3</span>, <span class="number">4</span>)  <span class="comment">// [0, 1, 2]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>union() 返回传入数组的并集</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">union</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>])  <span class="comment">// [1, 2, 3, 4, 5, 7, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>intersection() 返回传入数组的交集</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">intersection</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>],[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],[<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>])  <span class="comment">// [3, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>difference() 接受两个数组，返回第一个数组中不包含第二个数组的值的数组、</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">difference</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>],[<span class="number">3</span>,<span class="number">4</span>])  <span class="comment">// [1, 2, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>uniq() 返回一个去重后的新数组</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">uniq</span>([<span class="number">6</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">4</span>])  <span class="comment">// [6, 1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>zip() 将接收数组的值按对应的下标合并</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">zip</span>([<span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;j&#x27;</span>, <span class="string">&#x27;hi&#x27;</span>],[<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>])  <span class="comment">// [[&#x27;k&#x27;, 3], [&#x27;j&#x27;, 1], [&#x27;hi&#x27;, 2]]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>object() 合并数组为对象，如 key 重复就返回最后一个值</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">object</span>([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>],[<span class="string">&#x27;jay&#x27;</span>, <span class="number">18</span>])  <span class="comment">// &#123;name: &quot;jay&quot;, age: 18&#125;</span></span><br><span class="line">_.<span class="title function_">object</span>([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>, <span class="string">&#x27;age&#x27;</span>],[<span class="string">&#x27;jay&#x27;</span>, <span class="number">18</span>, <span class="number">14</span>])  <span class="comment">// &#123;name: &quot;jay&quot;, age: 14&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>indexOf() 返回指定值在数组中的下标</p>
+</li>
+<li>
+<p>lastIndexOf() 返回指定值在数组中从后开始的下标</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">indexOf</span>([<span class="number">1</span>, <span class="string">&#x27;hi&#x27;</span>, <span class="string">&#x27;jay&#x27;</span>], jay)  <span class="comment">// 2</span></span><br><span class="line">_.<span class="title function_">indexOf</span>([<span class="number">1</span>, <span class="string">&#x27;hi&#x27;</span>, <span class="string">&#x27;jay&#x27;</span>], jay)  <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>range() 接收一个开始数字和一个结束数字，生成一个数字数组</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">_.<span class="title function_">range</span>(<span class="number">5</span>)  <span class="comment">// [0, 1, 2, 3, 4]</span></span><br><span class="line">_.<span class="title function_">range</span>(<span class="number">0</span>, -<span class="number">10</span>, <span class="number">3</span>)  <span class="comment">// [0, -3, -6, -9]</span></span><br><span class="line">_.<span class="title function_">range</span>(<span class="number">0</span>, <span class="number">10</span>, <span class="number">3</span>)  <span class="comment">// [0, 3, 6, 9]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://keangj.github.io">Jay</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://keangj.github.io/p/2019/04/08/23/03/38/">https://keangj.github.io/p/2019/04/08/23/03/38/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://keangj.github.io" target="_blank">日常小记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/lodash/">lodash</a></div><div class="post_share"><div class="social-share" data-image="https://images-platform.99static.com/WG4uXLVV_iftAlJttXgvXgU6th0=/500x500/top/smart/99designs-contests-attachments/12/12583/attachment_12583422" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/wechatpay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/wechatpay.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/alipay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/alipay.png" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/2019/07/26/17/18/47/" title="TypeScript"><img class="cover" src="https://unpkg.com/keangj-assets@1.0.6/img/typescript.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TypeScript</div></div></a></div><div class="next-post pull-right"><a href="/p/2019/04/05/20/17/14/" title="mongoDB"><img class="cover" src="https://unpkg.com/keangj-assets@1.0.6/img/Mongo.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">mongoDB</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Twikoo</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#underscore-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> Underscore 基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#collections"><span class="toc-number">1.1.</span> <span class="toc-text"> Collections</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map-%E5%AF%B9%E9%9B%86%E5%90%88%E6%AF%8F%E4%B8%80%E9%A1%B9%E8%BF%9B%E8%A1%8C%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C%E8%BF%94%E5%9B%9E%E6%96%B0%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.1.</span> <span class="toc-text"> map() 对集合每一项进行一些操作，返回新数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#each-%E9%81%8D%E5%8E%86%E9%9B%86%E5%90%88%E7%B1%BB%E4%BC%BCmap"><span class="toc-number">1.1.2.</span> <span class="toc-text"> each() 遍历集合类似map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduce-%E5%AF%B9%E9%9B%86%E5%90%88%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E4%B8%94%E7%B4%AF%E8%AE%A1%E5%B9%B6%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B8%BA%E6%93%8D%E4%BD%9C%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">1.1.3.</span> <span class="toc-text"> reduce() 对集合进行操作且累计并返回结果，第三个参数为操作初始值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shuffle-%E6%89%93%E4%B9%B1%E9%9B%86%E5%90%88%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.4.</span> <span class="toc-text"> shuffle() 打乱集合顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sample-%E4%BB%8E%E9%9B%86%E5%90%88%E4%B8%AD%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E6%88%96%E6%8C%87%E5%AE%9A%E6%95%B0%E7%9B%AE%E7%9A%84%E9%A1%B9"><span class="toc-number">1.1.5.</span> <span class="toc-text"> sample() 从集合中随机选择一个或指定数目的项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#every-%E9%9B%86%E5%90%88%E7%9A%84%E6%AF%8F%E4%B8%80%E4%B8%AA%E9%A1%B9%E9%83%BD%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E8%BF%94%E5%9B%9Etrue%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9Efalse"><span class="toc-number">1.1.6.</span> <span class="toc-text"> every() 集合的每一个项都符合条件返回true，否则返回false</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#some-%E9%9B%86%E5%90%88%E7%9A%84%E6%9F%90%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E8%BF%94%E5%9B%9Etrue%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9Efalse"><span class="toc-number">1.1.7.</span> <span class="toc-text"> some() 集合的某一个项符合条件返回true，否则返回false</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-%E6%9F%A5%E6%89%BE%E9%9B%86%E5%90%88%E4%B8%AD%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B9"><span class="toc-number">1.1.8.</span> <span class="toc-text"> find() 查找集合中符合条件的第一项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter-%E8%BF%94%E5%9B%9E%E6%89%80%E6%9C%89%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-number">1.1.9.</span> <span class="toc-text"> filter() 返回所有符合条件的元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reject-%E4%B8%8E-filter-%E7%9B%B8%E5%8F%8D"><span class="toc-number">1.1.10.</span> <span class="toc-text"> reject() 与 filter() 相反</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#where-%E8%BF%94%E5%9B%9E%E5%8C%85%E5%90%AB%E6%9D%A1%E4%BB%B6%E7%9A%84%E9%A1%B9"><span class="toc-number">1.1.11.</span> <span class="toc-text"> where() 返回包含条件的项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#findwhere-%E5%90%8C-where%E5%8F%AA%E8%BF%94%E5%9B%9E%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9"><span class="toc-number">1.1.12.</span> <span class="toc-text"> findWhere() 同 where，只返回第一个项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#contains-%E5%8C%85%E5%90%AB%E6%8C%87%E5%AE%9A%E7%9A%84%E5%80%BC%E8%BF%94%E5%9B%9E-true"><span class="toc-number">1.1.13.</span> <span class="toc-text"> contains() 包含指定的值，返回 true</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pluck-%E8%BF%94%E5%9B%9E%E6%8C%87%E5%AE%9A-key-%E7%9A%84-value"><span class="toc-number">1.1.14.</span> <span class="toc-text"> pluck() 返回指定 key 的 value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#max-%E8%BF%94%E5%9B%9E%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">1.1.15.</span> <span class="toc-text"> max() 返回最大值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#min-%E8%BF%94%E5%9B%9E%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="toc-number">1.1.16.</span> <span class="toc-text"> min() 返回最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#groupby-%E6%8C%89-key-%E6%8A%8A%E4%B8%80%E4%B8%AA%E9%9B%86%E5%90%88%E5%88%86%E6%88%90%E5%A4%9A%E4%B8%AA%E9%9B%86%E5%90%88"><span class="toc-number">1.1.17.</span> <span class="toc-text"> groupBy() 按 key 把一个集合分成多个集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#indexby-%E8%BF%94%E5%9B%9E%E4%BB%A5%E6%8C%87%E5%AE%9A-key%E7%9A%84-value-%E5%88%86%E7%B1%BB%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.18.</span> <span class="toc-text"> indexBy() 返回以指定 key的 value 分类的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#countby-%E8%BF%94%E5%9B%9E%E4%BE%9D%E6%8D%AE%E6%9D%A1%E4%BB%B6%E5%88%86%E7%B1%BB%E7%9A%84%E6%AF%8F%E4%B8%80%E7%B1%BB%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.1.19.</span> <span class="toc-text"> countBy() 返回依据条件分类的每一类的数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#size-%E8%BF%94%E5%9B%9E%E9%9B%86%E5%90%88%E9%95%BF%E5%BA%A6"><span class="toc-number">1.1.20.</span> <span class="toc-text"> size() 返回集合长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#partition-%E8%BF%94%E5%9B%9E%E6%95%B0%E7%BB%84%E5%8C%85%E5%90%AB%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%B8%8D%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.21.</span> <span class="toc-text"> partition() 返回数组包含两个数组，第一个符合条件，第二个不符合条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84arrays"><span class="toc-number">1.2.</span> <span class="toc-text"> 数组(Arrays)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('https://images-platform.99static.com/WG4uXLVV_iftAlJttXgvXgU6th0=/500x500/top/smart/99designs-contests-attachments/12/12583/attachment_12583422')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Jay</div><div class="footer_custom_text">Hi, welcome to my <a href="https://keangj.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://keangj.github.io/p/2019/04/08/23/03/38/'
+    this.page.identifier = '/p/2019/04/08/23/03/38/'
+    this.page.title = 'Underscore'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://keangj-github-io.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=keangj-github-io&api_key=jzErrPLBlCWZFWIjvRLImg9MKBodBQl2YeLN6KHPolEPFhdciX6ePNFFet3AR2sx&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Twikoo' === 'Disqus' || !false) {
+    if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = false;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div class="docsearch-wrap"><div id="docsearch" style="display:none"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css/dist/style.min.css"/><script src="https://cdn.jsdelivr.net/npm/@docsearch/js/dist/umd/index.min.js"></script><script>(() => {
+  docsearch(Object.assign({
+    appId: '',
+    apiKey: '',
+    indexName: '',
+    container: '#docsearch',
+  }, null))
+
+  const handleClick = () => {
+    document.querySelector('.DocSearch-Button').click()
+  }
+
+  const searchClickFn = () => {
+    btf.addEventListenerPjax(document.querySelector('#search-button > .search'), 'click', handleClick)
+  }
+
+  searchClickFn()
+  window.addEventListener('pjax:complete', searchClickFn)
+})()</script></div></div></body></html>
