@@ -1,13 +1,15 @@
 ---
 title: SQL
+tags:
+  - SQL
+  - MYSQL
+categories:
+  - - SQL
+  - - MYSQL
+cover: 'https://unpkg.com/keangj-assets@1.0.7/img/sql.jpg'
+abbrlink: 29900
 date: 2024-06-28 22:17:14
 updated: 2024-06-28 22:17:14
-tags: [SQL, MYSQL]
-categories: 
-  - ['SQL']
-  - ['MYSQL']
-cover: https://unpkg.com/keangj-assets@1.0.7/img/sql.jpg
-
 ---
 
 # SQL

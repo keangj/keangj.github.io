@@ -14,7 +14,7 @@ timezone: ""
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://keangj.github.io/
-permalink: :year/:month/:day/:title/
+permalink: p/:year/:month/:day/:hour/:minute/:second/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -106,3 +106,36 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ""
+
+markdown_it_plus:
+    highlight: true
+    html: true
+    xhtmlOut: true
+    breaks: true
+    langPrefix:
+    linkify: true
+    typographer:
+    quotes: “”‘’
+    pre_class: highlight
+    plugins:
+        # Obsidian Callouts
+        - plugin:
+            name: mdit-plugin-callouts
+            enable: true
+            options:
+                this is plugin option
+        - plugin:
+            name: markdown-it-task-lists
+            enable: true
+            options:
+                # this is plugin option
+        # - plugin:
+        #     name: hexo-filter-titlebased-link
+        #     enable: true
+        #     options:
+        #         this is plugin option
+        # - plugin:
+        #     name: hexo-filter-link-post
+        #     enable: true
+        #     options:
+        #         # this is plugin option
