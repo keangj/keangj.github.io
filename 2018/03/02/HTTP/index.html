@@ -1,0 +1,756 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTTP | 日常小记</title><meta name="author" content="Jay"><meta name="copyright" content="Jay"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTTP  TCP&#x2F;IP 通常使用的网络（包括互联网）是在 TCP&#x2F;IP 协议族的基础上运作的。而 HTTP 属于它内部的一个子集。 TCP&#x2F;IP 协议族里重要的一点就是分层。TCP&#x2F;IP 协议族按层分别为四层：应用层、传输层、网络层和数据链路层。  应用层决定了向用户提供应用服务时通信的活动。HTTP 协议处于该层。 传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。 网络层用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP">
+<meta property="og:url" content="https://keangj.github.io/2018/03/02/HTTP/index.html">
+<meta property="og:site_name" content="日常小记">
+<meta property="og:description" content="HTTP  TCP&#x2F;IP 通常使用的网络（包括互联网）是在 TCP&#x2F;IP 协议族的基础上运作的。而 HTTP 属于它内部的一个子集。 TCP&#x2F;IP 协议族里重要的一点就是分层。TCP&#x2F;IP 协议族按层分别为四层：应用层、传输层、网络层和数据链路层。  应用层决定了向用户提供应用服务时通信的活动。HTTP 协议处于该层。 传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。 网络层用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://unpkg.com/keangj-assets@1.0.6/img/http.png">
+<meta property="article:published_time" content="2018-03-02T19:04:48.000Z">
+<meta property="article:modified_time" content="2021-07-02T00:00:00.000Z">
+<meta property="article:author" content="Jay">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://unpkg.com/keangj-assets@1.0.6/img/http.png"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/logo.jpeg"><link rel="canonical" href="https://keangj.github.io/2018/03/02/HTTP/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2b18fc5861131fae35675177f98dc5bd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":120,"languages":{"author":"作者: Jay","link":"链接: ","source":"来源: 日常小记","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTP',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-02 00:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/callout_blocks.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/26164191?s=400&amp;u=132d7e53e4f5b1e23d795ae9f79daad3b875de06&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://unpkg.com/keangj-assets@1.0.6/img/http.png')"><nav id="nav"><span id="blog-info"><a href="/" title="日常小记"><span class="site-name">日常小记</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTTP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-03-02T19:04:48.000Z" title="发表于 2018-03-02 19:04:48">2018-03-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-02T00:00:00.000Z" title="更新于 2021-07-02 00:00:00">2021-07-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTTP/">HTTP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title="HTTP"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2018/03/02/HTTP/#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="http"><a class="markdownIt-Anchor" href="#http"></a> HTTP</h1>
+<h2 id="tcpip"><a class="markdownIt-Anchor" href="#tcpip"></a> TCP/IP</h2>
+<p>通常使用的网络（包括互联网）是在 TCP/IP 协议族的基础上运作的。而 HTTP 属于它内部的一个子集。<br />
+TCP/IP 协议族里重要的一点就是分层。TCP/IP 协议族按层分别为四层：<strong>应用层、传输层、网络层和数据链路层</strong>。</p>
+<ul>
+<li>应用层决定了向用户提供应用服务时通信的活动。HTTP 协议处于该层。</li>
+<li>传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。</li>
+<li>网络层用来处理在网路上流动的数据包。该层规定了通过怎样的路径（所谓的传输路线）到达对方计算机，并把数据包传送给对方。</li>
+<li>数据链路层用来处理连接网络的硬件部分。<br />
+<img src="%E9%80%9A%E4%BF%A1%E4%BC%A0%E8%BE%93%E6%B5%81.png" alt="" /><br />
+利用 TCP/IP 协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则从链路层往上走。<br />
+<img src="%E9%80%9A%E4%BF%A1%E4%BC%A0%E8%BE%93%E6%B5%812.jpg" alt="" /><br />
+发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。<br />
+这种把数据信息包装起来的做法称为封装（encapsulate)。</li>
+</ul>
+<h3 id="ip-协议"><a class="markdownIt-Anchor" href="#ip-协议"></a> IP 协议</h3>
+<p>按层次分，IP（Internet Protocol）网际协议位于网络层。<br />
+IP 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 IP 地址和 MAC 地址（Media Access Control Address）。<br />
+IP 地址指明了节点被分配到的地址，MAC 地址是指网卡所属的固定地址。IP 地址可以和 MAC 地址进行配对。IP 地址可变换，但 MAC 地址基本上不会更改。<br />
+IP 间的通信依赖 MAC 地址。在网络上，通信的双方在同一局域网（LAN）内的情况是很少的，通常是经过多台计算机和网络设备中转才能连接到对方。而在进行中转时，会利用下一站中转设备的 MAC 地址来搜索下一个中转目标。这时，会采用 ARP 协议（Address Resolution Protocol）。ARP 是一种用以解析地址的协议，根据通信方的 IP 地址就可以反查出对应的 MAC 地址。</p>
+<h3 id="tcp-协议"><a class="markdownIt-Anchor" href="#tcp-协议"></a> TCP 协议</h3>
+<p>按层次分，TCP 位于传输层，提供可靠的字节流服务。<br />
+所谓的字节流服务（Byte Stream Service）是指，为了方便传输，将大块数据分割成以报文段（segment）为单位的数据包进行管理。TCP 协议为了更容易传送大数据才把数据分割，而且 TCP 协议能够确认数据最终是否送达到对方。<br />
+为了准确无误地将数据送达目标处，TCP 协议采用了**三次握手（three-way handshaking）**策略。握手过程中使用了 TCP 的标志（flag） —— SYN（synchronize） 和 ACK（acknowledgement）。<br />
+发送端首先发送一个带 SYN 标志的数据包给对方。接收端收到后，回传一个带有 SYN/ACK 标志的数据包以示传达确认信息。最后，发送端再回传一个带 ACK 标志的数据包，代表“握手”结束。<br />
+若在握手过程中某个阶段莫名中断，TCP 协议会再次以相同的顺序发送相同的数据包。<br />
+<img src="%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="三次握手" /></p>
+<h3 id="dns-服务"><a class="markdownIt-Anchor" href="#dns-服务"></a> DNS 服务</h3>
+<p>DNS（Domain Name System）服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br />
+计算机既可以被赋予 IP 地址，也可以被赋予主机名和域名。比如 <code>www.hackr.jp</code>。<br />
+用户通常使用主机名或域名来访问对方的计算机，而不是直接通过 IP 地址访问。因为与 IP 地址的一组纯数字相比，用字母配合数字的表示形式来指定计算机名更符合人类的记忆习惯。<br />
+但要让计算机去理解名称，相对而言就变得困难了。因为计算机更擅长处理一长串数字。<br />
+DNS 协议提供通过域名查找 IP 地址，或逆向从 IP 地址反查域名的服务。<br />
+<img src="DNS.png" alt="DNS" /></p>
+<h3 id="各种协议与-http-协议的关系"><a class="markdownIt-Anchor" href="#各种协议与-http-协议的关系"></a> 各种协议与 HTTP 协议的关系</h3>
+<p>![各种协议与 HTTP 协议的关系](各种协议与 HTTP 协议的关系.png)</p>
+<h3 id="uri-和-url"><a class="markdownIt-Anchor" href="#uri-和-url"></a> URI 和 URL</h3>
+<p>与 URI（统一资源标识符）相比，我们更熟悉 URL（Uniform Resource Locator，统一资源定位符）。URL 正是使用 Web 浏览器等访问 Web 页面时需要输入的网页地址。比如 <code>http://hackr.jp/</code> 就是 URL。<br />
+<strong>Uniform</strong>规定统一的格式可方便处理多种不同类型的资源，而不用根据上下文环境来识别资源指定的访问方式。另外，加入新增的协议方案（如 http: 或 ftp:）也更容易。<br />
+<strong>Resource</strong>资源的定义是“可标识的任何东西”。不仅是文档文件、图像或服务（例如当天的天气预报）等能够区别于其他类型的，全都可作为资源。另外，资源不仅可以是单一的，也可以是多数的集合体。<br />
+<strong>Identifier</strong>表示可标识的对象。也称为标识符。<br />
+URI 就是由某个协议方案表示的资源的定位标识符。协议方案是指访问资源所使用的协议类型名称。<br />
+URI 用字符串标识某一互联网资源，而 URL 表示资源的地点（互联网上所处的位置）。URL 是 URI 的子集。<br />
+URI 由两个主要的子集构成：</p>
+<ul>
+<li>URL：通过描述资源的位置来描述资源</li>
+<li>URN：通过名字来识别资源，和位置无关</li>
+</ul>
+<h3 id="uri-格式"><a class="markdownIt-Anchor" href="#uri-格式"></a> URI 格式</h3>
+<p>表示指定的 URI，要使用涵盖全部必要信息的绝对 URI、绝对 URL 以及相对 URL。相对 URL，是指从浏览器中基本 URI 处指定的 URL，形如<code>/image/logo.gif</code>。<br />
+绝对 URI 的格式：![绝对 URI 的格式](绝对 URI 的格式.png)<br />
+使用 <code>http:</code> 或 <code>https:</code> 等协议方案名获取访问资源时要指定协议类型。不区分字母大小写，最后附一个冒号（<code>:</code>）。<br />
+相对 URL<br />
+相对 URL 是 URL 一部分，从路径开始，前面木人使用当前文档的设置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">./image/logo.<span class="property">png</span></span><br><span class="line">../script/a.<span class="property">js</span></span><br><span class="line">/css/main.<span class="property">css</span></span><br></pre></td></tr></table></figure>
+<p><strong>登录信息（认证）</strong><br />
+指定用户名和密码作为从服务器端获取资源时必要的登录信息（身份认证）。此项是可选项。<br />
+<strong>服务器地址</strong><br />
+使用绝对 URI 必须指定待访问的服务器地址。地址可以是类似<code>hackr.jp</code>这种 DNS 可解析的名称，或是<code>192.168.1.1</code>这类 IPv4 地址 名，还可以是<code>[0:0:0:0:0:0:0:1]</code>这样用方括号括起来的 IPv6 地址名。<br />
+<strong>服务器端口号</strong><br />
+指定服务器连接的网络端口号。此项也是可选项，若用户省略则自动使用默认端口号。<br />
+<strong>带层次的文件路径</strong><br />
+指定服务器上的文件路径来定位特指的资源。这与 UNIX 系统的文件目录结构相似。<br />
+<strong>查询字符串</strong><br />
+针对已指定的文件路径内的资源，可以使用查询字符串传入任意参数。此项可选。<br />
+<strong>片段标识符</strong><br />
+使用片段标识符通常可标记出已获取资源中的子资源（文档内的某个位置）。但在 RFC 中并没有明确规定其使用方法。该项也为可选项。</p>
+<hr />
+<h2 id="http协议"><a class="markdownIt-Anchor" href="#http协议"></a> HTTP协议</h2>
+<p>HTTP 用于客户端和服务器之间的通信。<br />
+两台计算机之间使用 HTTP 协议通信时，在一条线路上必定有一端是客户端，另一端是服务器端。<br />
+HTTP 协议规定，请求从客户端出发，最后服务器端响应该请求并返回。</p>
+<h3 id="报文"><a class="markdownIt-Anchor" href="#报文"></a> 报文</h3>
+<p>请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 请求行</span></span><br><span class="line"><span class="comment">//方法  URI      协议版本</span></span><br><span class="line"><span class="variable constant_">GET</span> /form/entry <span class="variable constant_">HTTP</span>/<span class="number">1.1</span></span><br><span class="line"><span class="comment">// 请求首部字段</span></span><br><span class="line"><span class="title class_">Host</span>: www.<span class="property">baidu</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">Connection</span>: keep-alive</span><br><span class="line"><span class="title class_">Cache</span>-<span class="title class_">Control</span>: max-age=<span class="number">0</span></span><br><span class="line"><span class="comment">// 内容实体</span></span><br><span class="line">name=ueno&amp;age=<span class="number">37</span></span><br></pre></td></tr></table></figure>
+<p>响应报文由协议版本、状态码、用以解释状态码的原因短语、可选的响应首部字段以及实体主体构成。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 状态行</span></span><br><span class="line"><span class="comment">//协议版本 状态码 状态码的原因短语</span></span><br><span class="line"><span class="variable constant_">HTTP</span>/<span class="number">1.1</span> <span class="number">200</span> <span class="variable constant_">OK</span></span><br><span class="line"><span class="comment">// 响应首部字段</span></span><br><span class="line"><span class="title class_">Date</span>: <span class="title class_">Thu</span>, <span class="number">08</span> <span class="title class_">Mar</span> <span class="number">2018</span> <span class="number">07</span>:<span class="number">33</span>:<span class="number">56</span> <span class="variable constant_">GMT</span></span><br><span class="line"><span class="title class_">Connection</span>: <span class="title class_">Keep</span>-<span class="title class_">Alive</span></span><br><span class="line"><span class="title class_">Content</span>-<span class="title class_">Encoding</span>: gzip</span><br><span class="line"><span class="title class_">Content</span>-<span class="title class_">Type</span>: text/html; charset=utf-<span class="number">8</span></span><br><span class="line"><span class="comment">// 主体</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">···</span><br></pre></td></tr></table></figure>
+<p>当客户端请求访问资源而发送请求时，URI 需要将作为请求报文中的请求 URI 包含在内。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// URI为完整的请求URI</span></span><br><span class="line"><span class="variable constant_">GET</span> <span class="attr">http</span>:<span class="comment">//baidu.com/index.htm HTTP/1.1</span></span><br><span class="line"><span class="comment">// 在首部字段Host中写明网络域名或IP地址</span></span><br><span class="line"><span class="variable constant_">GET</span> /index.<span class="property">htm</span> <span class="variable constant_">HTTP</span>/<span class="number">1.1</span></span><br><span class="line"><span class="title class_">Host</span>: baidu.<span class="property">com</span></span><br></pre></td></tr></table></figure>
+<p>如果不是访问特定资源而是对服务器本身发起请求，可以用一个<code>*</code>来代替请求 URI</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable constant_">OPTIONS</span> * <span class="variable constant_">HTTP</span>/<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+<h4 id="首部字段"><a class="markdownIt-Anchor" href="#首部字段"></a> 首部字段</h4>
+<p><strong>通用首部</strong>：客户端和服务器都可以实用的就是通用首部</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Connection</td>
+<td style="text-align:center">客户端和服务器是否保持连接</td>
+</tr>
+<tr>
+<td style="text-align:center">Date</td>
+<td style="text-align:center">日期，报文创建时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Update</td>
+<td style="text-align:center">给出了发送端可能想要升级使用新版本或协议</td>
+</tr>
+<tr>
+<td style="text-align:center">Via</td>
+<td style="text-align:center">显示了报文经过的中间节点（代理、网关）</td>
+</tr>
+<tr>
+<td style="text-align:center">Trailer</td>
+<td style="text-align:center">如果报文采用分块传输编码方式，可以利用这个首部列出位于报文 trailer 部分的首部集合</td>
+</tr>
+<tr>
+<td style="text-align:center">Trailer-Encoding</td>
+<td style="text-align:center">告诉接收端对报文采用什么编码格式</td>
+</tr>
+<tr>
+<td style="text-align:center">Cache-Control</td>
+<td style="text-align:center">随报文传送缓存指示</td>
+</tr>
+<tr>
+<td style="text-align:center">Pragma</td>
+<td style="text-align:center">早期的随报文传送指示方式</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求首部</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Client-IP</td>
+<td style="text-align:center">客户端 IP</td>
+</tr>
+<tr>
+<td style="text-align:center">From</td>
+<td style="text-align:center">客户端邮件地址</td>
+</tr>
+<tr>
+<td style="text-align:center">Host</td>
+<td style="text-align:center">接收请求的服务器的主机名和端口号</td>
+</tr>
+<tr>
+<td style="text-align:center">Referer</td>
+<td style="text-align:center">提供了包含当前请求 URI 的文档的 URL，告诉服务器自己来源</td>
+</tr>
+<tr>
+<td style="text-align:center">User—Agent</td>
+<td style="text-align:center">发起请求的客户端应用程序</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept</td>
+<td style="text-align:center">告诉服务器能够发送那些媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Charset</td>
+<td style="text-align:center">告诉服务器能够发送那些字符集</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Encoding</td>
+<td style="text-align:center">告诉服务器能够发送那些编码</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Language</td>
+<td style="text-align:center">告诉服务器能够发送那些语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Expect</td>
+<td style="text-align:center">允许客户端列出请求所要求的服务器行为</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Match</td>
+<td style="text-align:center">如果 ETag 和文档当前 ETag 匹配，就获取文档</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Modified-Since</td>
+<td style="text-align:center">除非在某个指定日期之后修改过，否则限制这个请求</td>
+</tr>
+<tr>
+<td style="text-align:center">If-None-Match</td>
+<td style="text-align:center">如果 ETag 和当前文档 ETag 不符合，获取资源</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Range</td>
+<td style="text-align:center">允许对文档否个范围内的条件请求</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Unmodified-Since</td>
+<td style="text-align:center">在某个指定日期之后没有修改过，否则现在请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Cookie</td>
+<td style="text-align:center">客户端字符串</td>
+</tr>
+</tbody>
+</table>
+<p><strong>响应首部</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">响应持续时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Server</td>
+<td style="text-align:center">服务器应用软件名称和版本</td>
+</tr>
+<tr>
+<td style="text-align:center">Allow</td>
+<td style="text-align:center">列出了可用的请求方法</td>
+</tr>
+<tr>
+<td style="text-align:center">Location</td>
+<td style="text-align:center">告诉客户端实在在哪里，用于定向</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Base</td>
+<td style="text-align:center">解析主体中相对 URL 的基础 URL</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Encoding</td>
+<td style="text-align:center">主体编码格式</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Language</td>
+<td style="text-align:center">解析主体时适用的语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Length</td>
+<td style="text-align:center">主体的长度或尺寸</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Location</td>
+<td style="text-align:center">资源实际位置</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-MD5</td>
+<td style="text-align:center">主体的 MD5 校验和</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Range</td>
+<td style="text-align:center">在整个资源中此实体部分的字节范围</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Type</td>
+<td style="text-align:center">主体的 MIME</td>
+</tr>
+<tr>
+<td style="text-align:center">ETag</td>
+<td style="text-align:center">主体的实体标记</td>
+</tr>
+<tr>
+<td style="text-align:center">Expires</td>
+<td style="text-align:center">过期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Last-Modified</td>
+<td style="text-align:center">实体最后一次修改时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="方法"><a class="markdownIt-Anchor" href="#方法"></a> 方法</h3>
+<ul>
+<li><code>GET</code>：获取资源<br />
+GET 是最常用的方法，通常用于请求服务器发送某个资源。指定的资源经服务器端解析后返回响应内容。使用 GET 的请求应该只用于获取数据。该方法是幂等（调用一次与连续调用多次是等价的）的，参数以明文传递。</li>
+<li><code>POST</code>：传输实体主体<br />
+POST 用于想服务器发送数据，通常用来支持 HTML 的表单（input、select、textarea），表单中的数据会被发送到服务器</li>
+<li><code>PUT</code>：传输文件<br />
+和 GET 从服务器获取资源相反，PUT 用于想服务器写入资源。PUT 的语义就是让服务器用请求的主体部分创建一个请求 URL 命名的文档，如果存在就替换（对资源进行整体覆盖）。该方法是幂等的。</li>
+<li><code>HEAD</code>：获得报文首部<br />
+HEAD 方法和 GET 方法一样，只是不返回报文主体部分。用于确认 URI 的有效性及资源更新的日期时间等。该方法是幂等的。</li>
+<li><code>DELETE</code>：删除文件<br />
+DELETE 方法按请求 URI 删除指定的资源，是与 PUT 相反的方法。该方法是幂等的。</li>
+<li><code>OPTIONS</code>：询问支持的方法<br />
+OPTIONS 方法用于请求 web 服务器告知其支持的各种功能</li>
+<li><code>TRACE</code>：追踪路径<br />
+TRACE 方法是让 web 服务器端将之前的请求通信返回给客户端的方法。<br />
+客户端发送一个请求的时候，这个请求可能会穿过防火墙、代理、网关和一些其它应用程序，没个中间节点都可能修改 HTTP 请求，TRACE 方法允许客户端在最终请求发往服务器的时候，看看它变成了什么样子<br />
+TRACE 请求会在目的服务器端发送一个“闭环”诊断，行程最后一站服务器会弹回一条 TRACE 响应，并在响应主题中携带它收到的原始请求报文</li>
+<li><code>CONNECT</code>：要求用隧道协议连接代理<br />
+CONNECT 方法要求在与代理服务器通信时建立隧道，实现用隧道协议进行 TCP 通信。</li>
+<li><code>PATCH</code>：用于对资源进行部分修改<br />
+该方法与POST请求类似是非幂等的。</li>
+</ul>
+<h3 id="状态码"><a class="markdownIt-Anchor" href="#状态码"></a> 状态码</h3>
+<p>状态码的职责是当客户端向服务器发送请求时，描述返回的请求结果。借助状态码，用户可以指定服务器端是正常处理了请求，还是出现了错误。<br />
+状态码如 <code>200 OK</code> ，以 3 位数字和原因短语组成。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态码</th>
+<th style="text-align:center">类别</th>
+<th style="text-align:center">原因短语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1xx</td>
+<td style="text-align:center">Informational(信息性状态码)</td>
+<td style="text-align:center">接收的请求正在处理</td>
+</tr>
+<tr>
+<td style="text-align:center">2xx</td>
+<td style="text-align:center">Success(成功状态码)</td>
+<td style="text-align:center">请求正常处理完毕</td>
+</tr>
+<tr>
+<td style="text-align:center">3xx</td>
+<td style="text-align:center">Redirection(重定向状态码)</td>
+<td style="text-align:center">需要进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td style="text-align:center">4xx</td>
+<td style="text-align:center">Client Error(客户端状态码)</td>
+<td style="text-align:center">服务器无法处理请求</td>
+</tr>
+<tr>
+<td style="text-align:center">5xx</td>
+<td style="text-align:center">Server Error(服务器状态码)</td>
+<td style="text-align:center">服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1xx"><a class="markdownIt-Anchor" href="#1xx"></a> 1XX</h4>
+<ul>
+<li>100 Continue<br />
+初始的请求已经接受，客户应当继续发送请求的其余部分。（HTTP 1.1 新）</li>
+<li>101 Switching Protocols<br />
+服务器将遵从客户的请求转换到另外一种协议（HTTP 1.1 新）</li>
+</ul>
+<h4 id="2xx-成功"><a class="markdownIt-Anchor" href="#2xx-成功"></a> 2XX 成功</h4>
+<p>响应的结果表明请求被正确的处理了。</p>
+<ul>
+<li><strong><code>200 OK</code></strong><br />
+表示客户端发来的请求在服务器端被正常处理了。<br />
+在响应报文内，随状态码一起返回的信息会因方法的不同而发送改变。</li>
+<li>201 Created<br />
+服务器已经创建了文档，Location 头给出了它的 URL。</li>
+<li>202 Accepted<br />
+已经接受请求，但处理尚未完成。</li>
+<li>203 Non-Authoritative Information<br />
+文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝（HTTP 1.1 新）。</li>
+<li><strong><code>204 No Content</code></strong><br />
+该状态码代表服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分。另外，也不允许返回任何实体的主体。没有新文档，浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而 Servlet 可以确定用户文档足够新，这个状态代码是很有用的。</li>
+<li>205 Reset Content<br />
+没有新的内容，但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容（HTTP 1.1 新）。</li>
+<li><strong><code>206 Partial Content</code></strong><br />
+该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的 GET 请求。响应报文中包含由 Content-Range 指定范围的实体内容。客户发送了一个带有 Range 头的 GET 请求，服务器完成了它（HTTP 1.1 新）。</li>
+</ul>
+<h4 id="3xx-重定向"><a class="markdownIt-Anchor" href="#3xx-重定向"></a> 3XX 重定向</h4>
+<p>浏览器需要执行某些特殊的处理以正确处理请求。</p>
+<ul>
+<li>300 Multiple Choices<br />
+客户请求的文档可以在多个位置找到，这些位置已经在返回的文档内列出。如果服务器要提出优先选择，则应该在 Location 应答头指明。</li>
+<li><strong><code>301 Moved Permanently</code></strong><br />
+永久性重定向。该状态码表示请求的资源已被分配了新的 URI，以后应使用资源现在所指的 URI。客户请求的文档在其他地方，新的 URL 在 Location 头中给出，浏览器应该自动地访问新的 URL。</li>
+<li><strong><code>302 Found</code></strong><br />
+临时性重定向。该状态码表示请求的资源已被分配了新的 URI，希望用户能使用新的 URI 访问。类似于 301，但新的 URL 应该被视为临时性的替代，而不是永久性的。注意，在 HTTP1.0 中对应的状态信息是“Moved Temporatily”。出现该状态代码时，浏览器能够自动访问新的 URL，因此它是一个很有用的状态代码。注意这个状态代码有时候可以和 301 替换使用。例如，如果浏览器错误地请求<code>http://host/~user</code>（缺少了后面的斜杠），有的服务器 返回 301，有的则返回 302。严格地说，我们只能假定只有当原来的请求是 GET 时浏览器才会自动重定向。请参见 307。</li>
+<li><strong><code>303 See Other</code></strong><br />
+该状态码表示由于请求对应的资源存在着另一个 URI，应使用 GET 光谷定向获取请求的资源。类似于 301/302，不同之处在于，如果原来的请求是 POST，Location 头指定的重定向目标文档应该通过 GET 提取（HTTP 1.1 新）。</li>
+<li><strong><code>304 Not Modified</code></strong><br />
+该状态码表示客户端发送附带条件的请求时，服务器端允许请求访问资源，但因发生请求未满足条件的情况后，直接返回 304 Not Modified。304 状态码返回时，不包含任何响应的主体部分。客户端有缓冲的文档并发出了一个条件性的请求（一般是提供 If-Modified-Since 头表示客户只想比指定日期更新的文档）。服务器告 诉客户，原来缓冲的文档还可以继续使用。</li>
+<li>305 Use Proxy<br />
+客户请求的文档应该通过 Location 头所指明的代理服务器提取（HTTP 1.1 新）。</li>
+<li><strong><code>307 Temporary Redirect</code></strong><br />
+和 302 （Found）相同。许多浏览器会错误地响应 302 应答进行重定向，即使原来的请求是 POST，即使它实际上只能在 POST 请求的应答是 303 时才能重定 向。由于这个原因，HTTP 1.1 新增了 307，以便更加清除地区分几个状态代码：当出现 303 应答时，浏览器可以跟随重定向的 GET 和 POST 请求；如果是 307 应答，则浏览器只 能跟随对 GET 请求的重定向。（HTTP 1.1 新）</li>
+</ul>
+<h4 id="4xx-客户端错误"><a class="markdownIt-Anchor" href="#4xx-客户端错误"></a> 4XX 客户端错误</h4>
+<p>4XX 响应结果表明客户端是发生错误的原因所在。</p>
+<ul>
+<li><strong><code>400 Bad Request</code></strong><br />
+请求出现语法错误。</li>
+<li><strong><code>401 Unauthorized</code></strong><br />
+发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证）的认证信息。客户试图未经授权访问受密码保护的页面。应答中会包含一个 WWW-Authenticate 头，浏览器据此显示用户名字/密码对话框，然后在填 写合适的 Authorization 头后再次发出请求。</li>
+<li><strong><code>403 Forbidden</code></strong><br />
+请求资源的访问被服务器拒绝了。资源不可用。服务器理解客户的请求，但拒绝处理它。通常由于服务器上文件或目录的权限设置导致。</li>
+<li><strong><code>404 Not Found</code></strong><br />
+服务器上无法找到请求的资源。</li>
+<li>405 Method Not Allowed<br />
+请求方法（GET、POST、HEAD、DELETE、PUT、TRACE 等）对指定的资源不适用。（HTTP 1.1 新）</li>
+<li>406 Not Acceptable<br />
+指定的资源已经找到，但它的 MIME 类型和客户在 Accept 头中所指定的不兼容（HTTP 1.1 新）。</li>
+<li>407 Proxy Authentication Required<br />
+类似于 401，表示客户必须先经过代理服务器的授权。（HTTP 1.1 新）</li>
+<li>408 Request Timeout<br />
+在服务器许可的等待时间内，客户一直没有发出任何请求。客户可以在以后重复同一请求。（HTTP 1.1 新）</li>
+<li>409 Conflict<br />
+通常和 PUT 请求有关。由于请求和资源的当前状态相冲突，因此请求不能成功。（HTTP 1.1 新）</li>
+<li>410 Gone<br />
+所请求的文档已经不再可用，而且服务器不知道应该重定向到哪一个地址。它和 404 的不同在于，返回 407 表示文档永久地离开了指定的位置，而 404 表示由于未知的原因文档不可用。（HTTP 1.1 新）</li>
+<li>411 Length Required<br />
+服务器不能处理请求，除非客户发送一个 Content-Length 头。（HTTP 1.1 新）</li>
+<li>412 Precondition Failed<br />
+请求头中指定的一些前提条件失败（HTTP 1.1 新）。</li>
+<li>413 Request Entity Too Large<br />
+目标文档的大小超过服务器当前愿意处理的大小。如果服务器认为自己能够稍后再处理该请求，则应该提供一个 Retry-After 头（HTTP 1.1 新）。</li>
+<li>414 Request URI Too Long<br />
+URI 太长（HTTP 1.1 新）。</li>
+<li>416 Requested Range Not Satisfiable<br />
+服务器不能满足客户在请求中指定的 Range 头。（HTTP 1.1 新）</li>
+</ul>
+<h4 id="5xx-服务器错误"><a class="markdownIt-Anchor" href="#5xx-服务器错误"></a> 5XX 服务器错误</h4>
+<p>5XX 的响应结果表明服务器本身发生错误。</p>
+<ul>
+<li><strong><code>500 Internal Server Error</code></strong><br />
+服务器端在执行请求时发生了错误。也有可能是 Web 应用存在的 bug 或某些临时的故障。</li>
+<li>501 Not Implemented<br />
+服务器不支持实现请求所需要的功能。例如，客户发出了一个服务器不支持的 PUT 请求。</li>
+<li>502 Bad Gateway<br />
+服务器作为网关或者代理时，为了完成请求访问下一个服务器，但该服务器返回了非法的应答。</li>
+<li><strong><code>503 Service Unavailable</code></strong><br />
+服务器暂时处于超负荷或正在进行停机维护，现在无法处理请求。例如，Servlet 可能在数据库连接池已满的情况下返回 503。服务器返回 503 时可以提供一个 Retry-After 头。</li>
+<li>504 Gateway Timeout<br />
+由作为代理或网关的服务器使用，表示不能及时地从远程服务器获得应答。（HTTP 1.1 新）</li>
+<li>505 HTTP Version Not Supported<br />
+服务器不支持请求中所指明的 HTTP 版本。（HTTP 1.1 新）<br />
+<img src="%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="" /> <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/for-GET/http-decision-diagram/master/httpdd.png">状态码</a></li>
+</ul>
+<hr />
+<h2 id="https"><a class="markdownIt-Anchor" href="#https"></a> HTTPS</h2>
+<p>HTTP 存在以下问题，通信内容在所有的通信线路上都有可能遭到窥视。</p>
+<ul>
+<li>
+<p>通信使用铭文（不加密），内容可能会被窃听。</p>
+</li>
+<li>
+<p>不验证通信放的身份，因此有可能遭遇伪装（不确认通信方，不论是谁发送过来的请求都会返回响应）。</p>
+</li>
+<li>
+<p>无法证明报文的完整性，所以又可能已遭篡改</p>
+<!-- HTTP 协议的实现本身非常简单，不论是谁发送过来的请求都会返回响应，因此不确认通信方，会存在以下各种隐患。
+- 无法确认请求发送至目标的web服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的 web 服务器。
+- 无法确认响应返回到的客户端是否是按照真实意图接收响应的那个客户端。有可能是已伪装的客户端。
+- 无法确认正在通信的对方是否具备访问权限。因为某些 web 服务器上保存着重要的信息，只想发给特定用户通信的权限。
+- 无法判定请求是来自何方、出自谁手。
+- 即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击） -->
+</li>
+</ul>
+<p>为解决这些问题需要在 HTTP 上再加入加密处理和认证等机制。我们把添加了加密及认证机制的 HTTP 称之为 HTTPS（HTTP Secure）。<br />
+HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用 SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。<br />
+通常，HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。<br />
+SSL 是独立于 HTTP 的协议，所以不只是 HTTP 协议，其他运行在应用层的协议均可配合 SSL 协议使用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://keangj.github.io">Jay</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://keangj.github.io/2018/03/02/HTTP/">https://keangj.github.io/2018/03/02/HTTP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://keangj.github.io" target="_blank">日常小记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTTP/">HTTP</a></div><div class="post_share"><div class="social-share" data-image="https://unpkg.com/keangj-assets@1.0.6/img/http.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/wechatpay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/wechatpay.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/alipay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/keangj/AssetsRepo/img/qr-code/alipay.png" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/03/28/vs-code-%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="vs code 快捷键"><img class="cover" src="https://i1.wp.com/buralog.jp/wp-content/uploads/2019/07/visual-sutdio-code-logo.png?fit=480%2C240&amp;ssl=1" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vs code 快捷键</div></div></a></div><div class="next-post pull-right"><a href="/2018/02/19/%E5%8F%98%E5%BD%A2%E4%B8%8E%E5%8A%A8%E7%94%BB/" title="变形与动画"><img class="cover" src="https://unpkg.com/keangj-assets@1.0.6/img/css.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">变形与动画</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Twikoo</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http"><span class="toc-number">1.</span> <span class="toc-text"> HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tcpip"><span class="toc-number">1.1.</span> <span class="toc-text"> TCP&#x2F;IP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ip-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text"> IP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tcp-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text"> TCP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dns-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.3.</span> <span class="toc-text"> DNS 服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B8%8E-http-%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 各种协议与 HTTP 协议的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uri-%E5%92%8C-url"><span class="toc-number">1.1.5.</span> <span class="toc-text"> URI 和 URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uri-%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.6.</span> <span class="toc-text"> URI 格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text"> HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5"><span class="toc-number">1.2.1.1.</span> <span class="toc-text"> 首部字段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1xx"><span class="toc-number">1.2.3.1.</span> <span class="toc-text"> 1XX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2xx-%E6%88%90%E5%8A%9F"><span class="toc-number">1.2.3.2.</span> <span class="toc-text"> 2XX 成功</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3xx-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.2.3.3.</span> <span class="toc-text"> 3XX 重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4xx-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="toc-number">1.2.3.4.</span> <span class="toc-text"> 4XX 客户端错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5xx-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">1.2.3.5.</span> <span class="toc-text"> 5XX 服务器错误</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#https"><span class="toc-number">1.3.</span> <span class="toc-text"> HTTPS</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('https://unpkg.com/keangj-assets@1.0.6/img/http.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Jay</div><div class="footer_custom_text">Hi, welcome to my <a href="https://keangj.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-xi.vercel.app/',
+      region: 'ap-hangzhou',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://keangj.github.io/2018/03/02/HTTP/'
+    this.page.identifier = '/2018/03/02/HTTP/'
+    this.page.title = 'HTTP'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://keangj-github-io.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=keangj-github-io&api_key=jzErrPLBlCWZFWIjvRLImg9MKBodBQl2YeLN6KHPolEPFhdciX6ePNFFet3AR2sx&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Twikoo' === 'Disqus' || !false) {
+    if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = false;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div class="docsearch-wrap"><div id="docsearch" style="display:none"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css/dist/style.min.css"/><script src="https://cdn.jsdelivr.net/npm/@docsearch/js/dist/umd/index.min.js"></script><script>(() => {
+  docsearch(Object.assign({
+    appId: '',
+    apiKey: '',
+    indexName: '',
+    container: '#docsearch',
+  }, null))
+
+  const handleClick = () => {
+    document.querySelector('.DocSearch-Button').click()
+  }
+
+  const searchClickFn = () => {
+    btf.addEventListenerPjax(document.querySelector('#search-button > .search'), 'click', handleClick)
+  }
+
+  searchClickFn()
+  window.addEventListener('pjax:complete', searchClickFn)
+})()</script></div></div></body></html>
